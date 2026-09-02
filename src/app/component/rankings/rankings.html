@@ -1,32 +1,35 @@
 <p-fieldset class="" legend="Classement" toggleable="true">
-    <p-tree-table [value]="nodes()" size="small" scrollable="true" tableStyleClass="table-fixed">
+    <p-tree-table [value]="nodes()" size="small" scrollable="true" tableStyleClass="">
         <ng-template #header>
             <tr class="">
                 <th>Joueur</th>
-                <th colspan="2">Elo</th>
-                <th>Mis à jour le</th>
+                <th>Elo</th>
+                <th>MàJ</th>
                 <th>Ronde</th>
-                <th colspan="2"></th>
+
             </tr>
         </ng-template>
         <ng-template #body let-rowNode let-stat="rowData">
             <tr [ttRow]="rowNode">
+
                 <td>
                     <div class="inline-flex items-center gap-2">
-                        <p-treetable-toggler [rowNode]="rowNode" />{{ stat.name }}
+                        <p-treetable-toggler [rowNode]="rowNode" />
+                        {{ stat.name }}
+
                     </div>
                 </td>
-                <td colspan="2" class="border">
+                <td>
+                    <app-elo-change [elo]="stat.elo" class=""></app-elo-change>
                     @if(stat.eloValue){
                     {{stat.eloValue}}
                     }
-                    <app-elo-change [elo]="stat.elo"></app-elo-change>
                 </td>
+
                 <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
-                <td>{{stat.round}}</td>
-                <td colspan="2">
+                <td>{{stat.round}}
                     @if(stat.elo && stat.elo.opponent){
-                    vs. {{stat.elo.opponent.player}} [ {{stat.elo.opponent.elo}} ]
+                    vs. {{stat.elo.opponent.player}} ( {{stat.elo.opponent.elo}} )
                     }
 
                 </td>
