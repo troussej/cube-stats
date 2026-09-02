@@ -38,6 +38,7 @@ export class PlayerElo {
         public elo: number,
         public oldElo: number,
         public date: Date,
-        public round: number
+        public round: number,
+        public opponent?: PlayerElo
     ) { }
 }
