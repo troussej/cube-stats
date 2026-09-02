@@ -13,6 +13,7 @@ export class PlayersStoreService {
 
     public addPlayer(player: Player) {
         this.players.update(players => [...players, player]);
+        return player;
     }
 
     public addPlayerElo(playerElo: PlayerElo) {
@@ -28,6 +29,7 @@ export class PlayersStoreService {
     }
 
     public calculateElo(player1: Player, player2: Player, score1: number, score2: number, date: Date): [number, number] {
+        console.log(`Calculating Elo for ${player1.name} vs ${player2.name} with scores ${score1}-${score2} on ${date.toISOString()}`);
         const K = this.config.kfactor; // K-factor for Elo calculation
         const player1Elo = this.getLatestElo(player1)?.elo ?? this.config.defaultElo;
         const player2Elo = this.getLatestElo(player2)?.elo ?? this.config.defaultElo;
@@ -38,6 +40,8 @@ export class PlayersStoreService {
 
         const newElo1 = player1Elo + K * (score1 - expectedScore1);
         const newElo2 = player2Elo + K * (score2 - expectedScore2);
+
+        console.log(`New Elo for ${player1.name}: ${newElo1}, New Elo for ${player2.name}: ${newElo2}`);
 
         this.addPlayerElo(new PlayerElo(player1, newElo1, date));
         this.addPlayerElo(new PlayerElo(player2, newElo2, date));

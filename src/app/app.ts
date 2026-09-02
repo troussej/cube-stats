@@ -1,12 +1,29 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-
+import { Component, inject, signal } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
+import { RankingsPage } from './page/rankings.page/rankings.page';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuItem } from 'primeng/api';
+import { Square } from '@primeicons/angular/square';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RankingsPage, MenubarModule, Square],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('cube-stats');
+  protected readonly title = signal('CUBE STATS');
+  private router = inject(Router);
+  public menuData: MenuItem[] = [];
+  ngOnInit(): void {
+    this.menuData = [
+      {
+        label: 'Home',
+        icon: 'pi pi-home',
+        command: () => {
+          this.router.navigate(['']);
+        }
+
+      },
+    ]
+  }
 }

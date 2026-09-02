@@ -29,14 +29,17 @@ export class DraftsStoreService {
     }
 
     public finishDraftSession(draftSession: DraftSession) {
+        console.log(`Finishing draft session on ${draftSession.date.toISOString()}`);
         // Calculate Elo for each game in the draft session
         _.chain(draftSession.games)
             .sort((game) => game.round)
             .forEach(game => {
+                console.log(`Processing game: ${game.player1.name} vs ${game.player2.name}, score: ${game.score1}-${game.score2}`);
                 const player1 = { name: game.player1.name };
                 const player2 = { name: game.player2.name };
                 this.playerService.calculateElo(player1, player2, game.score1, game.score2, draftSession.date);
-            });
+            })
+            .value();
     }
 
 }

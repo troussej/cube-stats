@@ -1,0 +1,11 @@
+<p-panel class="m-4 w-full" header="Rankings">
+
+    <app-debug [data]="playersService.playersElo()"></app-debug>
+    <app-debug [data]="draftsStoreService.drafts()"></app-debug>
+    <app-debug [data]="data()"></app-debug>
+
+    <p-table [value]="data()">
+
+    </p-table>
+    <p-divider />
+</p-panel>
