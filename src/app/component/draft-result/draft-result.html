@@ -1,6 +1,6 @@
 <p-panel class=" mt-2 " header="Draft du {{ draftSession().date | date:'dd/MM/yyyy' }}">
-    <div class="grid grid-cols-2">
-        <div class="col-span-1 mt-2">
+    <div class="grid lg:grid-cols-2 gap-2">
+        <div class="col-span-1">
             @for(player of draftSession().players; track player) {
 
             <p> {{ player.name }} :
