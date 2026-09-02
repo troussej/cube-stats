@@ -1,0 +1,14 @@
+<p-tag severity="secondary">
+
+    @for(s of tag().manaString; track s){
+    @if( s==='(' || s===')'){
+    {{s}}
+    }
+    @else {
+    <span [class]="colorClass(s)">
+        <i class="ms ms-{{s}}"></i>
+    </span>
+    }
+    }
+    {{ tag().description}}
+</p-tag>

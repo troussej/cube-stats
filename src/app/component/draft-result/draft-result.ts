@@ -6,9 +6,10 @@ import { Debug } from "../debug/debug";
 import { DatePipe } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { PanelModule } from 'primeng/panel';
+import { DeckTag } from "../deck-tag/deck-tag";
 
 @Component({
-  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule],
+  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule, DeckTag],
   selector: 'app-draft-result',
   styleUrl: './draft-result.css',
   templateUrl: './draft-result.html',

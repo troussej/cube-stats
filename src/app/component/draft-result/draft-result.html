@@ -3,7 +3,9 @@
         <div class="col-span-1 mt-2">
             @for(player of draftSession().players; track player) {
 
-            <p> {{ player.name }} : <p-tag [value]="player.deck "></p-tag> </p>
+            <p> {{ player.name }} :
+                <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
+            </p>
             }
         </div>
 
