@@ -19,20 +19,13 @@ export class DraftsStoreService {
 
         return forkJoin([
             this.sheetService.getDraftsSessions(),
-            this.sheetService.getGames(),
-            this.sheetService.getPlayerElo()
+            this.sheetService.getGames()
+
         ]).pipe(
-            map(([drafts, games, playerElos]) => {
+            map(([drafts, games]) => {
 
                 const gamesByDraftId = _.groupBy(games, 'draftId');
                 const draftsById = _.keyBy(drafts, ds => ds.id);
-
-                const players = _.chain(playerElos).map('player').uniq().value();
-                for (const playerName of players) {
-                    this.playerService.addPlayer(playerName);
-                }
-
-                this.playerService.playersElo.set(playerElos);
 
                 _.forEach(gamesByDraftId, (gamesForDraft, draftId) => {
                     const draftSession = draftsById[draftId];
