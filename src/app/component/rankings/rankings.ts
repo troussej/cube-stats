@@ -9,9 +9,10 @@ import { SortableColumn, TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { Debug } from "../debug/debug";
 import { FieldsetModule } from 'primeng/fieldset';
+import { EloChange } from "../elo-change/elo-change";
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',
@@ -37,7 +38,7 @@ export class Rankings {
         const children = _.chain(this.playersService.playersElo())
           .filter((playerElo) => playerElo.player === player)
           .map((playerElo) => ({
-            data: { elo: playerElo.elo, date: playerElo.date, round: playerElo.round, ancienElo: playerElo.oldElo },
+            data: { elo: playerElo, date: playerElo.date, round: playerElo.round },
           }))
           .orderBy(['data.date', 'data.round'], ['desc', 'desc'])
           .value();
@@ -45,14 +46,14 @@ export class Rankings {
           data: {
             key: player,
             name: player,
-            elo: elo?.elo,
+            eloValue: elo?.elo,
             date: elo?.date,
 
           },
           children
         };
       })
-      .orderBy('data.elo', 'desc')
+      .orderBy('data.eloValue', 'desc')
       .value();
   });
 }

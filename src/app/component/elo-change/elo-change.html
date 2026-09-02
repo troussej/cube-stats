@@ -1,0 +1,16 @@
+@if(elo() && elo()?.elo){
+
+<div class="flex">
+    {{elo()!.oldElo}}
+    &nbsp;
+    @if(changeDir() ===0){
+    <svg data-p-icon="arrow-right"></svg>
+    }@else if(changeDir()>0){
+    <svg data-p-icon="arrow-up-right"></svg>
+    }@else{
+    <svg data-p-icon="arrow-down-right"></svg>
+    }
+    &nbsp;
+    {{elo()!.elo}}
+</div>
+}

@@ -1,11 +1,12 @@
 <p-fieldset class="" legend="Classement" toggleable="true">
-    <p-tree-table [value]="nodes()" size="small" scrollable="true" tableStyleClass="table-auto">
+    <p-tree-table [value]="nodes()" size="small" scrollable="true" tableStyleClass="table-fixed">
         <ng-template #header>
-            <tr>
+            <tr class="">
                 <th>Joueur</th>
-                <th>Elo</th>
+                <th colspan="2">Elo</th>
                 <th>Mis à jour le</th>
                 <th>Ronde</th>
+                <th colspan="2"></th>
             </tr>
         </ng-template>
         <ng-template #body let-rowNode let-stat="rowData">
@@ -15,11 +16,20 @@
                         <p-treetable-toggler [rowNode]="rowNode" />{{ stat.name }}
                     </div>
                 </td>
-                <td>@if(stat.ancienElo){
-                    {{ stat.ancienElo }} -> }{{ stat.elo }}
+                <td colspan="2" class="border">
+                    @if(stat.eloValue){
+                    {{stat.eloValue}}
+                    }
+                    <app-elo-change [elo]="stat.elo"></app-elo-change>
                 </td>
                 <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
                 <td>{{stat.round}}</td>
+                <td colspan="2">
+                    @if(stat.elo && stat.elo.opponent){
+                    vs. {{stat.elo.opponent.player}} [ {{stat.elo.opponent.elo}} ]
+                    }
+
+                </td>
             </tr>
         </ng-template>
     </p-tree-table>

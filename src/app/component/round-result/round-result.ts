@@ -4,10 +4,11 @@ import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
+import { EloChange } from '../elo-change/elo-change';
 
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule],
+  imports: [PanelModule, TableModule, DividerModule, EloChange],
   selector: 'app-round-result',
   styleUrl: './round-result.css',
   templateUrl: './round-result.html',
