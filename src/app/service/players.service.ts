@@ -26,7 +26,7 @@ export class PlayersStoreService {
         const latestElo = this.getLatestElo(player);
         if (!latestElo || date > latestElo.date || (date >= latestElo.date && round > latestElo.round)) {
             console.log(`Adding new Elo entry for ${player}: ${elo} on ${date.toISOString()}`);
-            this.addPlayerElo(new PlayerElo(player, elo, date, round));
+            this.addPlayerElo(new PlayerElo(player, elo, latestElo?.elo || this.config.defaultElo, date, round));
         } else {
             console.log(`Not adding Elo entry for ${player}: ${elo} on ${date.toISOString()} and round ${round} because it's not more recent than the latest Elo entry (${latestElo.elo} on ${latestElo.date.toISOString()} and round ${latestElo.round}).`);
         }

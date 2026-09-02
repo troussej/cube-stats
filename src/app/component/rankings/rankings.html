@@ -1,0 +1,26 @@
+<p-panel class="" header="Classement">
+    <p-tree-table [value]="nodes()" size="small" scrollable="true" tableStyleClass="table-auto">
+        <ng-template #header>
+            <tr>
+                <th>Joueur</th>
+                <th>Elo</th>
+                <th>Mis à jour le</th>
+                <th>Ronde</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-rowNode let-stat="rowData">
+            <tr [ttRow]="rowNode">
+                <td>
+                    <div class="inline-flex items-center gap-2">
+                        <p-treetable-toggler [rowNode]="rowNode" />{{ stat.name }}
+                    </div>
+                </td>
+                <td>@if(stat.ancienElo){
+                    {{ stat.ancienElo }} -> }{{ stat.elo }}
+                </td>
+                <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
+                <td>{{stat.round}}</td>
+            </tr>
+        </ng-template>
+    </p-tree-table>
+</p-panel>

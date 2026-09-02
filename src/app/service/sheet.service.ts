@@ -83,7 +83,8 @@ export class SheetService {
                     date: this.parseDate(line["Date"]),
                     player: line["Nom du joueur"],
                     elo: Number.parseInt(line["Elo"]),
-                    round: Number.parseInt(line["Ronde"])
+                    round: Number.parseInt(line["Ronde"]),
+                    oldElo: Number.parseInt(line["Ancien Elo"]),
                 })
                 )),
                 map(playerElos => { console.log('getPlayerElo done', playerElos); return playerElos; })

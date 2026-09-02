@@ -3,10 +3,11 @@ import { DraftSession } from 'app/model/model';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import { PanelModule } from 'primeng/panel';
 
 
 @Component({
-  imports: [CardModule, TableModule, DividerModule],
+  imports: [PanelModule, TableModule, DividerModule],
   selector: 'app-round-result',
   styleUrl: './round-result.css',
   templateUrl: './round-result.html',
