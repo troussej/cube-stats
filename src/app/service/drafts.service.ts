@@ -56,7 +56,7 @@ export class DraftsStoreService {
                     .value();
 
 
-                console.log('init done', drafts, games, playerElos);
+                console.log('init done', drafts, games);
                 return true;
             })
         );
