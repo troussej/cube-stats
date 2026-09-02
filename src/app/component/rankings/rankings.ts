@@ -8,9 +8,10 @@ import { PanelModule } from 'primeng/panel';
 import { SortableColumn, TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { Debug } from "../debug/debug";
+import { FieldsetModule } from 'primeng/fieldset';
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, Debug],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',

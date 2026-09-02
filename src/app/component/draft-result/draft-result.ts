@@ -6,10 +6,12 @@ import { Debug } from "../debug/debug";
 import { DatePipe } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { PanelModule } from 'primeng/panel';
+import { SplitterModule } from 'primeng/splitter';
 import { DeckTag } from "../deck-tag/deck-tag";
+import { ɵEmptyOutletComponent } from "@angular/router";
 
 @Component({
-  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule, DeckTag],
+  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule, DeckTag, SplitterModule, ɵEmptyOutletComponent],
   selector: 'app-draft-result',
   styleUrl: './draft-result.css',
   templateUrl: './draft-result.html',

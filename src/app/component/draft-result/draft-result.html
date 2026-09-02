@@ -1,6 +1,9 @@
-<p-panel class=" mt-2 " header="Draft du {{ draftSession().date | date:'dd/MM/yyyy' }}">
-    <div class="grid md:grid-cols-2 gap-2">
-        <div class="col-span-1">
+<div class="grid lg:grid-cols-2 gap-2 mt-1">
+    <div class="col-span-1">
+        <ng-content />
+
+        <div class="mt-2">
+
             @for(player of draftSession().players; track player) {
 
             <p> {{ player.name }} :
@@ -8,12 +11,12 @@
             </p>
             }
         </div>
-
-        <div class="col-span-1 grid grid-cols-1 gap-2">
-
-            <app-round-result [draftSession]="draftSession()" [roundNumber]="1"></app-round-result>
-            <app-round-result [draftSession]="draftSession()" [roundNumber]="2"></app-round-result>
-            <app-round-result [draftSession]="draftSession()" [roundNumber]="3"></app-round-result>
-        </div>
     </div>
-</p-panel>
+
+    <div class="col-span-1 grid grid-cols-1 gap-2">
+
+        <app-round-result [draftSession]="draftSession()" [roundNumber]="1"></app-round-result>
+        <app-round-result [draftSession]="draftSession()" [roundNumber]="2"></app-round-result>
+        <app-round-result [draftSession]="draftSession()" [roundNumber]="3"></app-round-result>
+    </div>
+</div>

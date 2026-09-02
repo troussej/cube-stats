@@ -2,13 +2,15 @@
 
     <div>
 
-        <p-panel class="" header="Drafts">
-            <p-select [(ngModel)]="selectedDraft" [options]="draftOptions()" optionValue="value"
-                optionLabel="label"></p-select>
+        <p-fieldset class="" legend="Drafts" toggleable="true">
+
             @if(selectedDraft()){
-            <app-draft-result [draftSession]="getSelectedDraft()!"></app-draft-result>
+            <app-draft-result [draftSession]="getSelectedDraft()!">
+                <p-select class="mt-2" [(ngModel)]="selectedDraft" [options]="draftOptions()" optionValue="value"
+                    optionLabel="label"></p-select>
+            </app-draft-result>
             }
-        </p-panel>
+        </p-fieldset>
     </div>
 
     <div class="">

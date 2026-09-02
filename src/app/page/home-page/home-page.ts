@@ -11,9 +11,10 @@ import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @Component({
-  imports: [Rankings, PanelModule, DividerModule, TableModule, Debug, DatePipe, SelectModule, FormsModule, DraftResult],
+  imports: [Rankings, PanelModule, DividerModule, TableModule, Debug, DatePipe, SelectModule, FormsModule, DraftResult, FieldsetModule],
   selector: 'app-home-page',
   styleUrl: './home-page.css',
   templateUrl: './home-page.html',

@@ -6,16 +6,14 @@
     <p-table [value]="roundGames()" size="small" showGridline>
         <ng-template #header>
             <tr>
-                <th>J1</th>
-                <th>J2</th>
-                <th>Résultat</th>
+
             </tr>
         </ng-template>
         <ng-template #body let-game>
             <tr>
-                <td>{{ game.player1 }}</td>
-                <td>{{ game.player2 }}</td>
+                <td [class]="getClasses(1,game)">{{ game.player1 }}</td>
                 <td>{{ game.score1}} - {{game.score2 }}</td>
+                <td [class]="getClasses(2,game)">{{ game.player2 }}</td>
             </tr>
         </ng-template>
     </p-table>
