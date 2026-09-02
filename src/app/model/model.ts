@@ -1,8 +1,4 @@
-export class Player {
-    constructor(
-        public name: string,
-    ) { }
-}
+
 
 export class DraftPlayer {
     constructor(
@@ -14,6 +10,7 @@ export class DraftPlayer {
 
 export class DraftSession {
     constructor(
+        public id: string,
         public date: Date,
         public players: DraftPlayer[] = [],
 
@@ -26,18 +23,20 @@ export class DraftSession {
 export class Game {
     constructor(
         public round: number,
-        public player1: Player,
-        public player2: Player,
+        public player1: string,
+        public player2: string,
         public score1: number,
         public score2: number,
-        public date: Date
+        public date: Date,
+        public draftId: string
     ) { }
 }
 
 export class PlayerElo {
     constructor(
-        public player: Player,
+        public player: string,
         public elo: number,
-        public date: Date
+        public date: Date,
+        public round: number
     ) { }
 }

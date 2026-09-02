@@ -7,6 +7,7 @@ import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
 import { MockService } from './service/mock.service';
 import { of } from 'rxjs';
+import { DraftsStoreService } from './service/drafts.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,10 +34,10 @@ export const appConfig: ApplicationConfig = {
       console.log('provideAppInitializer');
       // return of(true);
       try {
-        const service = inject(MockService);
-        return service.initData();
+        const service = inject(DraftsStoreService);
+        return service.init();
       } catch (err) {
-        console.error('Error initializing MockService:', err);
+        console.error('Error initializing DraftsStoreService:', err);
         return of(false);
       }
     }),

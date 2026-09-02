@@ -12,10 +12,10 @@ export class MockService {
     public initData(): Observable<boolean> {
 
         console.log('MockService.initData()');
-        this.playersService.addPlayer({ name: "Alice" });
-        this.playersService.addPlayer({ name: "Bob" });
-        this.playersService.addPlayer({ name: "Charlie" });
-        this.playersService.addPlayer({ name: "David" });
+        this.playersService.addPlayer("Alice");
+        this.playersService.addPlayer("Bob");
+        this.playersService.addPlayer("Charlie");
+        this.playersService.addPlayer("David");
 
         const alice = { name: "Alice", deck: "WUB control" };
         const bob = { name: "Bob", deck: "BGR aggro" };

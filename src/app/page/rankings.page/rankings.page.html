@@ -1,11 +1,52 @@
-<p-panel class="m-4 w-full" header="Rankings">
+<p-panel class="m-4 " header="Drafts">
+    <p-select [(ngModel)]="selectedDraft" [options]="draftOptions()" optionValue="value" optionLabel="label"></p-select>
+    @if(selectedDraft()){
+    <app-draft-result [draftSession]="getSelectedDraft()!"></app-draft-result>
+    }
+</p-panel>
 
-    <app-debug [data]="playersService.playersElo()"></app-debug>
-    <app-debug [data]="draftsStoreService.drafts()"></app-debug>
-    <app-debug [data]="data()"></app-debug>
+<p-panel class="m-4 " header="Rankings">
 
-    <p-table [value]="data()">
+    <p-table [value]="data()" size="small" showGridline sortField="elo" [sortOrder]="-1" scrollable="true">
+
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn>Joueur <p-sort-icon field="name" /></th>
+                <th pSortableColumn>Elo <p-sort-icon field="elo" /></th>
+                <th pSortableColumn>Mis à jour le <p-sort-icon field="date" /></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-stat>
+            <tr>
+                <td>{{ stat.name }}</td>
+                <td>{{ stat.elo }}</td>
+                <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
+            </tr>
+        </ng-template>
 
     </p-table>
-    <p-divider />
+</p-panel>
+<p-panel class="m-4 " header="Evolution d'Elo">
+    <p-table [value]="playersService.playersElo()" size="small" showGridline sortMode="multiple"
+        [multiSortMeta]="[{field: 'player', order: 1},{field: 'date', order: -1}, {field: 'round', order: 1}]"
+        scrollable="true">
+
+        <ng-template #header>
+            <tr>
+                <th pSortableColumn>Joueur <p-sort-icon field="player" /></th>
+                <th pSortableColumn>Elo <p-sort-icon field="elo" /></th>
+                <th pSortableColumn>Draft du<p-sort-icon field="date" /></th>
+                <th pSortableColumn>Ronde <p-sort-icon field="round" /></th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-stat>
+            <tr>
+                <td>{{ stat.player }} </td>
+                <td>{{ stat.elo }}</td>
+                <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
+                <td>{{ stat.round }}</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
 </p-panel>

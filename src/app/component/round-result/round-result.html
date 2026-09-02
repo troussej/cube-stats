@@ -1,0 +1,22 @@
+<p-card class="border max-w-sm">
+    <ng-template pTemplate="header">
+        <h3>Round {{ roundNumber() }}</h3>
+    </ng-template>
+
+    <p-table [value]="roundGames()" size="small" showGridline>
+        <ng-template #header>
+            <tr>
+                <th>J1</th>
+                <th>J2</th>
+                <th>Résultat</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-game>
+            <tr>
+                <td>{{ game.player1 }}</td>
+                <td>{{ game.player2 }}</td>
+                <td>{{ game.score1}} - {{game.score2 }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

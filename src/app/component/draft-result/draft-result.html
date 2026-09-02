@@ -1,0 +1,17 @@
+<p-card class="border  mt-2 " header="Draft du {{ draftSession().date | date:'dd/MM/yyyy' }}">
+    <div class="grid grid-cols-4">
+        <div class="col-span-1 grid grid-cols-1">
+            @for(player of draftSession().players; track player) {
+
+            <p> {{ player.name }} : <p-tag [value]="player.deck "></p-tag> </p>
+            }
+        </div>
+
+        <div class="col-span-3 grid grid-cols-3 gap-2">
+
+            <app-round-result [draftSession]="draftSession()" [roundNumber]="1"></app-round-result>
+            <app-round-result [draftSession]="draftSession()" [roundNumber]="2"></app-round-result>
+            <app-round-result [draftSession]="draftSession()" [roundNumber]="3"></app-round-result>
+        </div>
+    </div>
+</p-card>

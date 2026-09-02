@@ -1,5 +1,5 @@
 import { inject, Service, signal, WritableSignal } from "@angular/core";
-import { Player, PlayerElo } from "../model/model";
+import { PlayerElo } from "../model/model";
 import _ from "lodash";
 import { ConfigService } from "./config.service";
 
@@ -8,11 +8,12 @@ export class PlayersStoreService {
 
     public config = inject(ConfigService).config;
 
-    public players: WritableSignal<Player[]> = signal<[]>([]);
+    public players: WritableSignal<string[]> = signal<[]>([]);
     public playersElo: WritableSignal<PlayerElo[]> = signal<[]>([]);
 
-    public addPlayer(player: Player) {
-        this.players.update(players => [...players, player]);
+    public addPlayer(player: string) {
+        console.log(`Adding player: ${player}`);
+        this.players.update(players => _.chain(players).concat(player).uniq().sort().value());
         return player;
     }
 
@@ -20,16 +21,27 @@ export class PlayersStoreService {
         this.playersElo.update(playersElo => [...playersElo, playerElo]);
     }
 
-    public getLatestElo(player: Player): PlayerElo | null {
+    public updatePlayerElo(player: string, elo: number, date: Date, round: number) {
+        //if date is more recent than the latest elo for the player, add a new PlayerElo entry
+        const latestElo = this.getLatestElo(player);
+        if (!latestElo || date > latestElo.date || (date >= latestElo.date && round > latestElo.round)) {
+            console.log(`Adding new Elo entry for ${player}: ${elo} on ${date.toISOString()}`);
+            this.addPlayerElo(new PlayerElo(player, elo, date, round));
+        } else {
+            console.log(`Not adding Elo entry for ${player}: ${elo} on ${date.toISOString()} and round ${round} because it's not more recent than the latest Elo entry (${latestElo.elo} on ${latestElo.date.toISOString()} and round ${latestElo.round}).`);
+        }
+    }
+
+    public getLatestElo(player: string): PlayerElo | null {
         return _.chain(this.playersElo())
-            .filter(pe => pe.player.name === player.name)
+            .filter({ player })
             .sortBy(pe => pe.date)
             .last()
             .value();
     }
 
-    public calculateElo(player1: Player, player2: Player, score1: number, score2: number, date: Date): [number, number] {
-        console.log(`Calculating Elo for ${player1.name} vs ${player2.name} with scores ${score1}-${score2} on ${date.toISOString()}`);
+    public calculateElo(player1: string, player2: string, score1: number, score2: number, date: Date): [number, number] {
+        console.log(`Calculating Elo for ${player1} vs ${player2} with scores ${score1}-${score2} on ${date.toISOString()}`);
         const K = this.config.kfactor; // K-factor for Elo calculation
         const player1Elo = this.getLatestElo(player1)?.elo ?? this.config.defaultElo;
         const player2Elo = this.getLatestElo(player2)?.elo ?? this.config.defaultElo;
@@ -38,13 +50,18 @@ export class PlayersStoreService {
         const expectedScore1 = 1 / (1 + Math.pow(10, (player2Elo - player1Elo) / 400));
         const expectedScore2 = 1 / (1 + Math.pow(10, (player1Elo - player2Elo) / 400));
 
-        const newElo1 = player1Elo + K * (score1 - expectedScore1);
-        const newElo2 = player2Elo + K * (score2 - expectedScore2);
+        let matchScore1 = 0.5; // Default to draw
+        let matchScore2 = 0.5; // Default to draw
+        if (score1 !== score2) {
+            matchScore1 = score1 > score2 ? 1 : 0;
+            matchScore2 = score2 > score1 ? 1 : 0;
 
-        console.log(`New Elo for ${player1.name}: ${newElo1}, New Elo for ${player2.name}: ${newElo2}`);
+        }
 
-        this.addPlayerElo(new PlayerElo(player1, newElo1, date));
-        this.addPlayerElo(new PlayerElo(player2, newElo2, date));
+        const newElo1 = Math.round(player1Elo + K * (matchScore1 - expectedScore1));
+        const newElo2 = Math.round(player2Elo + K * (matchScore2 - expectedScore2));
+
+        console.log(`New Elo for ${player1}: ${newElo1}, New Elo for ${player2}: ${newElo2}`);
 
         return [newElo1, newElo2];
     }
