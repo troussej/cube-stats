@@ -18,7 +18,9 @@
                     <div class="inline-flex items-center gap-2">
                         <p-treetable-toggler [rowNode]="rowNode" />
                         {{ stat.name }}
-
+                        @if(stat.oppData){
+                        vs {{ stat.oppData.player }} ({{stat.oppData.elo}})
+                        }
                     </div>
                 </td>
                 <td>

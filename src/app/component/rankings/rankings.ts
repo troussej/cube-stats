@@ -12,7 +12,7 @@ import { FieldsetModule } from 'primeng/fieldset';
 import { EloChange } from "../elo-change/elo-change";
 import { RankingChart } from '../chart/ranking-chart/ranking-chart';
 import { DraftsStoreService } from 'app/service/drafts.service';
-import { Game } from 'app/model/model';
+import { Game, PlayerEloChange } from 'app/model/model';
 
 @Component({
   imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange, RankingChart],
@@ -21,6 +21,7 @@ import { Game } from 'app/model/model';
   templateUrl: './rankings.html',
 })
 export class Rankings {
+
   public playersService = inject(PlayersStoreService);
   public draftsService = inject(DraftsStoreService);
 
@@ -43,7 +44,7 @@ export class Rankings {
         const children = _.chain(this.playersService.playersElo())
           .filter((playerElo) => playerElo.player === player)
           .map((playerElo) => ({
-            data: { elo: playerElo, date: playerElo.game.date, round: playerElo.game.round },
+            data: { elo: playerElo, date: playerElo.game.date, round: playerElo.game.round, oppData: this.oppData(playerElo, games) },
           }))
           .orderBy(['data.date', 'data.round'], ['desc', 'desc'])
           .value();
@@ -62,8 +63,15 @@ export class Rankings {
       .value();
   });
 
-  public findGame(games: Game[], draftId: string, round: number) {
-    return games.find(g => g.draftId === draftId && g.round === round);
+  public findGame(games: Game[], draftId: string, round: number, player: string) {
+    return games.find(g => g.draftId === draftId && g.round === round && (g.player1 === player || g.player2 === player));
+  }
+
+  oppData(playerElo: PlayerEloChange, games: Game[]): any {
+    const game = this.findGame(games, playerElo.game.draftId, playerElo.game.round, playerElo.player);
+    if (!game) return null;
+    return game.player1 === playerElo.player ? game.eloChange2 : game.eloChange1;
+
   }
 
 }

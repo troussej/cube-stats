@@ -28,8 +28,6 @@ export class DraftsStoreService {
                 const gamesByDraftId = _.groupBy(games, 'draftId');
                 const draftsById = _.keyBy(drafts, ds => ds.id);
 
-
-
                 _.forEach(gamesByDraftId, (gamesForDraft, draftId) => {
                     const draftSession = draftsById[draftId];
                     if (draftSession) {
