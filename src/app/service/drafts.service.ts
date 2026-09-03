@@ -46,9 +46,6 @@ export class DraftsStoreService {
 
                         const pElo1 = this.playerService.updatePlayerElo(game.player1, newElo1, game.date, game.round);
                         const pElo2 = this.playerService.updatePlayerElo(game.player2, newElo2, game.date, game.round);
-
-                        pElo1.opponent = pElo2;
-                        pElo2.opponent = pElo1;
                     })
                     .value();
 

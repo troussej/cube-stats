@@ -3,13 +3,23 @@
         <ng-content />
 
         <div class="mt-2">
+            <p-table [value]="draftSession().players">
+                <ng-template #header>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template #body let-player>
+                    <tr>
+                        <td>{{ player.name }}</td>
+                        <td>
+                            <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
 
-            @for(player of draftSession().players; track player) {
-
-            <p> {{ player.name }} :
-                <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
-            </p>
-            }
         </div>
     </div>
 
