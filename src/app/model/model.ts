@@ -28,11 +28,13 @@ export class Game {
         public score1: number,
         public score2: number,
         public date: Date,
-        public draftId: string
+        public draftId: string,
+        public eloChange1?: PlayerEloChange,
+        public eloChange2?: PlayerEloChange
     ) { }
 }
 
-export class PlayerElo {
+export class PlayerEloChange {
     constructor(
         public player: string,
         public elo: number,

@@ -6,7 +6,7 @@ import * as Papa from 'papaparse';
 import * as _ from 'lodash';
 import { ConfigService } from "./config.service";
 import { LocationStrategy } from "@angular/common";
-import { DraftPlayer, DraftSession, Game, PlayerElo } from "app/model/model";
+import { DraftPlayer, DraftSession, Game, PlayerEloChange } from "app/model/model";
 
 @Service()
 export class SheetService {
@@ -71,7 +71,7 @@ export class SheetService {
             );
     }
 
-    public getPlayerElo(): Observable<PlayerElo[]> {
+    public getPlayerElo(): Observable<PlayerEloChange[]> {
         const url = this.config.data.players;
         console.log('getPlayerElo %s %s', url);
         return this.http.get(url, { responseType: "text" })

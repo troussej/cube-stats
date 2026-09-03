@@ -1,5 +1,5 @@
 import { inject, Service, signal, WritableSignal } from "@angular/core";
-import { PlayerElo } from "../model/model";
+import { PlayerEloChange } from "../model/model";
 import _ from "lodash";
 import { ConfigService } from "./config.service";
 
@@ -9,7 +9,7 @@ export class PlayersStoreService {
     public config = inject(ConfigService).config;
 
     public players: WritableSignal<string[]> = signal<[]>([]);
-    public playersElo: WritableSignal<PlayerElo[]> = signal<[]>([]);
+    public playersElo: WritableSignal<PlayerEloChange[]> = signal<[]>([]);
 
     public addPlayer(player: string) {
         console.log(`Adding player: ${player}`);
@@ -17,21 +17,21 @@ export class PlayersStoreService {
         return player;
     }
 
-    public addPlayerElo(playerElo: PlayerElo) {
+    public addPlayerElo(playerElo: PlayerEloChange) {
         this.playersElo.update(playersElo => [...playersElo, playerElo]);
     }
 
-    public updatePlayerElo(player: string, elo: number, date: Date, round: number): PlayerElo {
+    public updatePlayerElo(player: string, elo: number, date: Date, round: number): PlayerEloChange {
         //if date is more recent than the latest elo for the player, add a new PlayerElo entry
         const latestElo = this.getLatestElo(player);
-        const playerElo = new PlayerElo(player, elo, latestElo?.elo ?? this.config.defaultElo, date, round);
+        const playerElo = new PlayerEloChange(player, elo, latestElo?.elo ?? this.config.defaultElo, date, round);
         if (!latestElo || playerElo.date > latestElo.date || (playerElo.date >= latestElo.date && playerElo.round > latestElo.round)) {
             this.addPlayerElo(playerElo);
         }
         return playerElo;
     }
 
-    public getLatestElo(player: string): PlayerElo | null {
+    public getLatestElo(player: string): PlayerEloChange | null {
         return _.chain(this.playersElo())
             .filter({ player })
             .sortBy(pe => pe.date)

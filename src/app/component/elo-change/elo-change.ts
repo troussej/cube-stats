@@ -1,5 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import { PlayerElo } from 'app/model/model';
+import { PlayerEloChange } from 'app/model/model';
 import { ArrowDownRight, ArrowUpRight, ArrowRight } from '@primeicons/angular';
 
 @Component({
@@ -10,7 +10,7 @@ import { ArrowDownRight, ArrowUpRight, ArrowRight } from '@primeicons/angular';
 })
 export class EloChange {
 
-  elo = input<PlayerElo>();
+  elo = input<PlayerEloChange>();
 
   public changeDir = computed<number>(() => {
     const elo = this.elo();

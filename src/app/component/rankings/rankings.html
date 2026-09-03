@@ -27,12 +27,7 @@
                 </td>
 
                 <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
-                <td>{{stat.round}}
-                    @if(stat.elo && stat.elo.opponent){
-                    vs. {{stat.elo.opponent.player}} ( {{stat.elo.opponent.elo}} )
-                    }
-
-                </td>
+                <td>{{stat.round}} </td>
             </tr>
         </ng-template>
     </p-tree-table>
