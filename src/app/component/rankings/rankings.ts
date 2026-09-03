@@ -11,6 +11,8 @@ import { Debug } from "../debug/debug";
 import { FieldsetModule } from 'primeng/fieldset';
 import { EloChange } from "../elo-change/elo-change";
 import { RankingChart } from '../chart/ranking-chart/ranking-chart';
+import { DraftsStoreService } from 'app/service/drafts.service';
+import { Game } from 'app/model/model';
 
 @Component({
   imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange, RankingChart],
@@ -20,18 +22,20 @@ import { RankingChart } from '../chart/ranking-chart/ranking-chart';
 })
 export class Rankings {
   public playersService = inject(PlayersStoreService);
+  public draftsService = inject(DraftsStoreService);
 
   public data = computed(() => {
     return _.chain(this.playersService.players())
       .map((player) => {
         const elo = this.playersService.getLatestElo(player);
-        return { name: player, elo: elo?.elo, date: elo?.date };
+        return { name: player, elo: elo?.elo, date: elo?.game.date };
       })
       .value();
   })
 
   public nodes = computed<TreeNode[]>(() => {
 
+    const games = this.draftsService.games();
 
     return _.chain(this.playersService.players())
       .map((player) => {
@@ -39,7 +43,7 @@ export class Rankings {
         const children = _.chain(this.playersService.playersElo())
           .filter((playerElo) => playerElo.player === player)
           .map((playerElo) => ({
-            data: { elo: playerElo, date: playerElo.date, round: playerElo.round },
+            data: { elo: playerElo, date: playerElo.game.date, round: playerElo.game.round },
           }))
           .orderBy(['data.date', 'data.round'], ['desc', 'desc'])
           .value();
@@ -48,7 +52,7 @@ export class Rankings {
             key: player,
             name: player,
             eloValue: elo?.elo,
-            date: elo?.date,
+            date: elo?.game.date,
 
           },
           children
@@ -57,4 +61,9 @@ export class Rankings {
       .orderBy('data.eloValue', 'desc')
       .value();
   });
+
+  public findGame(games: Game[], draftId: string, round: number) {
+    return games.find(g => g.draftId === draftId && g.round === round);
+  }
+
 }

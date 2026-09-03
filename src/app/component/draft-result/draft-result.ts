@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { DraftPlayer, DraftSession, PlayerEloChange } from 'app/model/model';
+import { DraftPlayer, DraftSession, Game, PlayerEloChange } from 'app/model/model';
 import { RoundResult } from "../round-result/round-result";
 import { CardModule } from 'primeng/card';
 import { Debug } from "../debug/debug";
@@ -23,6 +23,7 @@ export class DraftResult {
 
   public draftSession = input.required<DraftSession>();
 
+  private fakeGame = new Game(0, '', '', 0, 0, new Date(), '');
 
   public totalEloChange(player: DraftPlayer, draftSession: DraftSession) {
 
@@ -35,6 +36,6 @@ export class DraftResult {
 
     const before = _.minBy(changes, 'round')?.eloChange?.oldElo ?? 0;
     const after = _.maxBy(changes, 'round')?.eloChange?.elo ?? 0;
-    return new PlayerEloChange(player.name, after, before, draftSession.date, 0);
+    return new PlayerEloChange(player.name, after, before, this.fakeGame);
   }
 }

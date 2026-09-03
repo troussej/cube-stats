@@ -44,8 +44,7 @@ export class PlayerEloChange {
         public player: string,
         public elo: number,
         public oldElo: number,
-        public date: Date,
-        public round: number,
+        public game: Game,
     ) { }
 
 

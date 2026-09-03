@@ -71,27 +71,6 @@ export class SheetService {
             );
     }
 
-    public getPlayerElo(): Observable<PlayerEloChange[]> {
-        const url = this.config.data.players;
-        console.log('getPlayerElo %s %s', url);
-        return this.http.get(url, { responseType: "text" })
-            .pipe(
-                map(this.parse)
-                ,
-                map(csv => _.map(csv, (line: any) =>
-                ({
-                    date: this.parseDate(line["Date"]),
-                    player: line["Nom du joueur"],
-                    elo: Number.parseInt(line["Elo"]),
-                    round: Number.parseInt(line["Ronde"]),
-                    oldElo: Number.parseInt(line["Ancien Elo"])
-
-                })
-                )),
-                map(playerElos => { console.log('getPlayerElo done', playerElos); return playerElos; })
-            );
-    }
-
     private parse(text: string) {
         let data = Papa.parse(text, {
             header: true,

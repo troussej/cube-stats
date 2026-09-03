@@ -1,5 +1,5 @@
 import { inject, Service, signal, WritableSignal } from "@angular/core";
-import { PlayerEloChange } from "../model/model";
+import { Game, PlayerEloChange } from "../model/model";
 import _ from "lodash";
 import { ConfigService } from "./config.service";
 
@@ -21,11 +21,11 @@ export class PlayersStoreService {
         this.playersElo.update(playersElo => [...playersElo, playerElo]);
     }
 
-    public updatePlayerElo(player: string, elo: number, date: Date, round: number): PlayerEloChange {
+    public updatePlayerElo(player: string, elo: number, game: Game): PlayerEloChange {
         //if date is more recent than the latest elo for the player, add a new PlayerElo entry
         const latestElo = this.getLatestElo(player);
-        const playerElo = new PlayerEloChange(player, elo, latestElo?.elo ?? this.config.defaultElo, date, round);
-        if (!latestElo || playerElo.date > latestElo.date || (playerElo.date >= latestElo.date && playerElo.round > latestElo.round)) {
+        const playerElo = new PlayerEloChange(player, elo, latestElo?.elo ?? this.config.defaultElo, game);
+        if (!latestElo || playerElo.game.date > latestElo.game.date || (playerElo.game.date >= latestElo.game.date && playerElo.game.round > latestElo.game.round)) {
             this.addPlayerElo(playerElo);
         }
         return playerElo;
@@ -34,7 +34,7 @@ export class PlayersStoreService {
     public getLatestElo(player: string): PlayerEloChange | null {
         return _.chain(this.playersElo())
             .filter({ player })
-            .sortBy(pe => pe.date)
+            .sortBy(pe => pe.game.date)
             .last()
             .value();
     }

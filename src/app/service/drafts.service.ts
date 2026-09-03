@@ -48,8 +48,8 @@ export class DraftsStoreService {
                     .forEach(game => {
                         const [newElo1, newElo2] = this.playerService.calculateElo(game.player1, game.player2, game.score1, game.score2, game.date);
 
-                        const ec1 = this.playerService.updatePlayerElo(game.player1, newElo1, game.date, game.round);
-                        const ec2 = this.playerService.updatePlayerElo(game.player2, newElo2, game.date, game.round);
+                        const ec1 = this.playerService.updatePlayerElo(game.player1, newElo1, game);
+                        const ec2 = this.playerService.updatePlayerElo(game.player2, newElo2, game);
                         game.eloChange1 = ec1;
                         game.eloChange2 = ec2;
                     })
@@ -90,5 +90,7 @@ export class DraftsStoreService {
             })
             .value();
     }
+
+
 
 }

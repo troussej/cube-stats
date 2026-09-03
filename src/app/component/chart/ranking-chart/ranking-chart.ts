@@ -75,7 +75,7 @@ export class RankingChart {
     return _.chain(this.playerService.playersElo())
       .orderBy(['date'], ['asc'])
       .groupBy('player')
-      .mapValues((changesOfPlayer, player) => _.groupBy(changesOfPlayer, (c) => c.date.toLocaleDateString()))
+      .mapValues((changesOfPlayer, player) => _.groupBy(changesOfPlayer, (c) => c.game.date.toLocaleDateString()))
       .mapValues((changesOfPlayerByDate, player) => {
 
         return _.mapValues(changesOfPlayerByDate, (dateChanges) => _.maxBy(dateChanges, 'round')?.elo ?? 0)
