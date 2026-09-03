@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, model } from '@angular/core';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { PlayersStoreService } from 'app/service/players.service';
 import _ from 'lodash';
 import { TreeNode } from 'primeng/api';
@@ -12,9 +13,12 @@ import { EloChange } from "../elo-change/elo-change";
 import { DraftsStoreService } from 'app/service/drafts.service';
 import { Game, PlayerEloChange } from 'app/model/model';
 import { PlayerEloChart } from "../chart/player-elo-chart/player-elo-chart";
+import { FormsModule } from '@angular/forms';
+import { ConfigService } from 'app/service/config.service';
+import moment from 'moment';
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, TreeTableModule, FieldsetModule, EloChange, PlayerEloChart],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, TreeTableModule, FieldsetModule, EloChange, PlayerEloChart, ToggleSwitchModule, FormsModule],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',
@@ -23,25 +27,23 @@ export class Rankings {
 
   public playersService = inject(PlayersStoreService);
   public draftsService = inject(DraftsStoreService);
+  public config = inject(ConfigService).config;
 
-  public data = computed(() => {
-    return _.chain(this.playersService.players())
-      .map((player) => {
-        const elo = this.playersService.getLatestElo(player);
-        return { name: player, elo: elo?.elo, date: elo?.game.date };
-      })
-      .value();
-  })
+  public actif = model<boolean>(true);
 
   public nodes = computed<TreeNode[]>(() => {
 
     const games = this.draftsService.games();
 
+    const cutoffDate = moment().add(-1 * this.config.nbMoisActif, 'months');
+
     return _.chain(this.playersService.players())
-      .map((player) => {
-        const elo = this.playersService.getLatestElo(player);
+      .map(player => ({ player, lastElo: this.playersService.getLatestElo(player) }))
+      .filter(data => !this.actif() || moment(data.lastElo?.game.date).isAfter(cutoffDate))
+      .map((data) => {
+        const elo = data.lastElo;
         const children = _.chain(this.playersService.playersElo())
-          .filter((playerElo) => playerElo.player === player)
+          .filter((playerElo) => playerElo.player === data.player)
           .map((playerElo) => ({
             data: { elo: playerElo, date: playerElo.game.date, round: playerElo.game.round, oppData: this.oppData(playerElo, games) },
           }))
@@ -49,13 +51,13 @@ export class Rankings {
           .value();
         return {
           data: {
-            key: player,
-            name: player,
+            key: data.player,
+            name: data.player,
             eloValue: elo?.elo,
             date: elo?.game.date,
 
           },
-          children: [{ data: { chart: true, player } }, ...children]
+          children: [{ data: { chart: true, player: data.player } }, ...children]
         };
       })
       .orderBy('data.eloValue', 'desc')

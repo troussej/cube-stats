@@ -1,0 +1,13 @@
+  :host .p-toggleswitch-sm {
+
+      width: 2rem;
+      height: 1.25rem;
+
+
+      .p-toggleswitch-handle {
+          width: 0.675rem;
+          height: 0.675rem;
+          margin-block-start: calc(-1 * calc(0.675rem / 2));
+      }
+
+  }
