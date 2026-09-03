@@ -21,17 +21,14 @@ export class PlayersStoreService {
         this.playersElo.update(playersElo => [...playersElo, playerElo]);
     }
 
-    public buildPlayerElo(player: string, elo: number, date: Date, round: number) {
-        const latestElo = this.getLatestElo(player);
-        return new PlayerElo(player, elo, latestElo?.elo || this.config.defaultElo, date, round);
-    }
-
-    public updatePlayerElo(playerElo: PlayerElo) {
+    public updatePlayerElo(player: string, elo: number, date: Date, round: number): PlayerElo {
         //if date is more recent than the latest elo for the player, add a new PlayerElo entry
-        const latestElo = this.getLatestElo(playerElo.player);
+        const latestElo = this.getLatestElo(player);
+        const playerElo = new PlayerElo(player, elo, latestElo?.elo ?? this.config.defaultElo, date, round);
         if (!latestElo || playerElo.date > latestElo.date || (playerElo.date >= latestElo.date && playerElo.round > latestElo.round)) {
             this.addPlayerElo(playerElo);
         }
+        return playerElo;
     }
 
     public getLatestElo(player: string): PlayerElo | null {
