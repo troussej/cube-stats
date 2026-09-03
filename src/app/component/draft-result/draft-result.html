@@ -1,5 +1,5 @@
-<div class="grid xl:grid-cols-5 gap-2 mt-1 ">
-    <div class="xl:col-span-3">
+<div class="grid 2xl:grid-cols-5 gap-2 mt-1 ">
+    <div class="2xl:col-span-3">
         <ng-content />
 
         <div class=" mt-2">
@@ -20,7 +20,7 @@
                         </td>
                         <td class="whitespace-nowrap">{{ player.wins }}&nbsp;-&nbsp;{{ player.losses }}&nbsp;-&nbsp;{{
                             player.draws }}</td>
-                        <td></td>
+                        <td><app-elo-change [elo]="totalEloChange(player, draftSession())"></app-elo-change></td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <div class="xl:col-span-2 grid grid-cols-1 gap-2  ">
+    <div class="2xl:col-span-2 grid grid-cols-1 gap-2  ">
         <app-round-result [draftSession]="draftSession()" [roundNumber]="1"></app-round-result>
         <app-round-result [draftSession]="draftSession()" [roundNumber]="2"></app-round-result>
         <app-round-result [draftSession]="draftSession()" [roundNumber]="3"></app-round-result>
