@@ -44,14 +44,11 @@ export class DraftsStoreService {
                     .forEach(game => {
                         const [newElo1, newElo2] = this.playerService.calculateElo(game.player1, game.player2, game.score1, game.score2, game.date);
 
-                        const pElo1 = this.playerService.buildPlayerElo(game.player1, newElo1, game.date, game.round);
-                        const pElo2 = this.playerService.buildPlayerElo(game.player2, newElo2, game.date, game.round);
+                        const pElo1 = this.playerService.updatePlayerElo(game.player1, newElo1, game.date, game.round);
+                        const pElo2 = this.playerService.updatePlayerElo(game.player2, newElo2, game.date, game.round);
 
                         pElo1.opponent = pElo2;
                         pElo2.opponent = pElo1;
-
-                        this.playerService.updatePlayerElo(pElo1);
-                        this.playerService.updatePlayerElo(pElo2);
                     })
                     .value();
 
