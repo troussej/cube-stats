@@ -5,7 +5,6 @@ import { routes } from './app.routes';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
-import { MockService } from './service/mock.service';
 import { of } from 'rxjs';
 import { DraftsStoreService } from './service/drafts.service';
 

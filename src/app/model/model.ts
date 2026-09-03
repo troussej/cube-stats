@@ -1,9 +1,14 @@
 
 
 export class DraftPlayer {
+
     constructor(
         public name: string,
         public deck: string,
+        public wins: number = 0,
+        public losses: number = 0,
+        public draws: number = 0,
+        public score: number = 0
     ) { }
 }
 
@@ -43,3 +48,4 @@ export class PlayerEloChange {
         public round: number,
     ) { }
 }
+

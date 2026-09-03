@@ -1,11 +1,13 @@
-<div class="grid md:grid-cols-2 gap-2 mt-1">
-    <div class="col-span-1">
+<div class="grid 2xl:grid-cols-2 gap-2 mt-1 ">
+    <div class="">
         <ng-content />
 
         <div class="mt-2">
-            <p-table [value]="draftSession().players">
+            <p-table [value]="draftSession().players" orderBy="score" [sortOrder]="-1">
                 <ng-template #header>
                     <tr>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -16,6 +18,9 @@
                         <td>
                             <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
                         </td>
+                        <td class="whitespace-nowrap">{{ player.wins }}&nbsp;-&nbsp;{{ player.losses }}&nbsp;-&nbsp;{{
+                            player.draws }}</td>
+                        <td></td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -23,8 +28,7 @@
         </div>
     </div>
 
-    <div class="col-span-1 grid grid-cols-1 gap-2">
-
+    <div class="grid grid-cols-1 gap-2  ">
         <app-round-result [draftSession]="draftSession()" [roundNumber]="1"></app-round-result>
         <app-round-result [draftSession]="draftSession()" [roundNumber]="2"></app-round-result>
         <app-round-result [draftSession]="draftSession()" [roundNumber]="3"></app-round-result>

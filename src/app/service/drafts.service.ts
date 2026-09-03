@@ -27,6 +27,8 @@ export class DraftsStoreService {
                 const gamesByDraftId = _.groupBy(games, 'draftId');
                 const draftsById = _.keyBy(drafts, ds => ds.id);
 
+                const draftSessions: DraftSession[] = [];
+
                 _.forEach(gamesByDraftId, (gamesForDraft, draftId) => {
                     const draftSession = draftsById[draftId];
                     if (draftSession) {
@@ -34,7 +36,8 @@ export class DraftsStoreService {
                             this.playerService.addPlayer(player.name);
                         }
                         draftSession.games = gamesForDraft;
-                        this.addDraftSession(draftSession);
+                        this.updatePlayerResults(draftSession);
+                        draftSessions.push(draftSession);
 
                     }
                 });
@@ -52,46 +55,36 @@ export class DraftsStoreService {
                     .value();
 
 
+                this.drafts.set(draftSessions);
                 console.log('init done', drafts, games);
                 return true;
             })
         );
     }
 
+    public updatePlayerResults(draftSession: DraftSession) {
+        _.chain(draftSession.players)
+            .forEach(player => {
+                const result = _.reduce(draftSession.games, (counts, game) => {
+                    if (game.player1 !== player.name && game.player2 !== player.name) {
+                        return counts;
+                    }
 
-    public createDraftSession(date: Date, players: DraftPlayer[]) {
-        const draftSession: DraftSession = { id: date.toISOString(), date, players, games: [] };
-        this.drafts.update(drafts => [...drafts, draftSession]);
-        // this.currentDraftSession.set(draftSession);
-        return draftSession;
-    }
+                    if (game.score1 === game.score2) {
+                        counts.draws++;
+                    } else if ((game.player1 === player.name && game.score1 > game.score2) || (game.player2 === player.name && game.score2 > game.score1)) {
+                        counts.wins++;
+                    } else {
+                        counts.losses++;
+                    }
 
-    public addDraftSession(draftSession: DraftSession) {
-        this.drafts.update(drafts => [...drafts, draftSession]);
-    }
+                    return counts;
+                }, { wins: 0, losses: 0, draws: 0 });
 
-    public updateDraftSession(draftSession: DraftSession) {
-        this.drafts.update(drafts => drafts.map(ds => ds.id === draftSession.id ? draftSession : ds));
-    }
-
-    public addGame(draftSession: DraftSession,
-        roundNumber: number,
-        player1: DraftPlayer,
-        player2: DraftPlayer,
-        score1: number, score2: number) {
-        const game = { round: roundNumber, player1: player1.name, player2: player2.name, score1, score2, date: draftSession.date, draftId: draftSession.id };
-        draftSession.games.push(game);
-        this.drafts.update(drafts => drafts.map(ds => ds.id === draftSession.id ? draftSession : ds));
-    }
-
-    public finishDraftSession(draftSession: DraftSession) {
-        console.log(`Finishing draft session on ${draftSession.date.toISOString()}`);
-        // Calculate Elo for each game in the draft session
-        _.chain(draftSession.games)
-            .sort((game) => game.round)
-            .forEach(game => {
-                console.log(`Processing game: ${game.player1} vs ${game.player2}, score: ${game.score1}-${game.score2}`);
-                this.playerService.calculateElo(game.player1, game.player2, game.score1, game.score2, draftSession.date);
+                player.wins = result.wins;
+                player.losses = result.losses;
+                player.draws = result.draws;
+                player.score = 3 * result.wins + result.draws;
             })
             .value();
     }
