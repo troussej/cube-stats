@@ -77,11 +77,11 @@ export class RankingChart {
       .groupBy('player')
       .mapValues((changesOfPlayer, player) => _.groupBy(changesOfPlayer, (c) => c.date.toLocaleDateString()))
       .mapValues((changesOfPlayerByDate, player) => {
-        console.log('changesOfPlayerByDate', changesOfPlayerByDate);
+
         return _.mapValues(changesOfPlayerByDate, (dateChanges) => _.maxBy(dateChanges, 'round')?.elo ?? 0)
       })
       .mapValues((dateToElo) => {
-        console.log('dateToElo', dateToElo);
+
         return _.map(dates, (date) => dateToElo[date])
       })
       .map((chartData, player) => this.buildDataSet(chartData, player))

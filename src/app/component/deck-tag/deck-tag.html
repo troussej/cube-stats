@@ -1,16 +1,21 @@
 <p-tag severity="secondary">
+    <div class="grid place-items-center auto-cols-max">
 
-    @for(s of tag().manaString; track s){
-    @if( s==='(' || s===')'){
-    {{s}}
-    }
-    @else {
-    <span [class]="colorClass(s)">
-        <i class="ms ms-{{s}}"></i>
-    </span>
-    }
-    }
-    <span class="capitalize">
-        {{ tag().description}}
-    </span>
+        <div class="">
+            @for(s of tag().manaString; track s){
+            @if( s==='(' || s===')'){
+            {{s}}
+            }
+            @else {
+            <span [class]="colorClass(s)">
+                <i class="ms ms-{{s}}"></i>
+            </span>
+            }
+            }
+        </div>
+        <span class="capitalize whitespace-nowrap">
+            {{ tag().description}}
+        </span>
+
+    </div>
 </p-tag>
