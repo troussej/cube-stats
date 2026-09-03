@@ -1,13 +1,13 @@
 <p-tag severity="secondary">
     <div class="grid place-items-center auto-cols-max">
 
-        <div class="">
+        <div class="flex gap-0.5">
             @for(s of tag().manaString; track s){
             @if( s==='(' || s===')'){
-            {{s}}
+            <span> {{s}} </span>
             }
             @else {
-            <span [class]="colorClass(s)">
+            <span [class]="colorClass(s)" class="">
                 <i class="ms ms-{{s}}"></i>
             </span>
             }
