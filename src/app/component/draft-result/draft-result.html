@@ -3,7 +3,7 @@
         <ng-content />
 
         <div class=" mt-2">
-            <p-table [value]="draftSession().players" orderBy="score" [sortOrder]="-1">
+            <p-table [value]="draftSession().players" sortField="score" [sortOrder]="-1">
                 <ng-template #header>
                     <tr>
                         <th></th>
