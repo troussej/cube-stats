@@ -1,5 +1,5 @@
 import { Service, WritableSignal, inject, signal } from "@angular/core";
-import { DraftPlayer, DraftSession } from "../model/model";
+import { DraftPlayer, DraftSession, Game } from "../model/model";
 import { PlayersStoreService } from "./players.service";
 import _ from "lodash";
 import { forkJoin, map, Observable } from "rxjs";
@@ -12,6 +12,7 @@ export class DraftsStoreService {
     public sheetService = inject(SheetService);
 
     public drafts: WritableSignal<DraftSession[]> = signal<[]>([]);
+    public games: WritableSignal<Game[]> = signal<[]>([]);
     //  public currentDraftSession: WritableSignal<DraftSession | null> = signal<DraftSession | null>(null);
 
 
@@ -27,7 +28,7 @@ export class DraftsStoreService {
                 const gamesByDraftId = _.groupBy(games, 'draftId');
                 const draftsById = _.keyBy(drafts, ds => ds.id);
 
-                const draftSessions: DraftSession[] = [];
+
 
                 _.forEach(gamesByDraftId, (gamesForDraft, draftId) => {
                     const draftSession = draftsById[draftId];
@@ -37,7 +38,7 @@ export class DraftsStoreService {
                         }
                         draftSession.games = gamesForDraft;
                         this.updatePlayerResults(draftSession);
-                        draftSessions.push(draftSession);
+
 
                     }
                 });
@@ -55,8 +56,9 @@ export class DraftsStoreService {
                     .value();
 
 
-                this.drafts.set(draftSessions);
-                console.log('init done', drafts, games);
+                this.drafts.set(_.values(draftsById));
+                this.games.set(games);
+                console.log('init done', this.drafts(), this.games());
                 return true;
             })
         );

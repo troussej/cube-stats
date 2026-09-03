@@ -47,5 +47,7 @@ export class PlayerEloChange {
         public date: Date,
         public round: number,
     ) { }
+
+
 }
 

@@ -12,9 +12,10 @@ import { PanelModule } from 'primeng/panel';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { FieldsetModule } from 'primeng/fieldset';
+import { RankingChart } from "app/component/chart/ranking-chart/ranking-chart";
 
 @Component({
-  imports: [Rankings, PanelModule, DividerModule, TableModule, Debug, DatePipe, SelectModule, FormsModule, DraftResult, FieldsetModule],
+  imports: [Rankings, PanelModule, DividerModule, TableModule, Debug, DatePipe, SelectModule, FormsModule, DraftResult, FieldsetModule, RankingChart],
   selector: 'app-home-page',
   styleUrl: './home-page.css',
   templateUrl: './home-page.html',

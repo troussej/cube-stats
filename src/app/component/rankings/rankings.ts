@@ -10,9 +10,10 @@ import { TreeTableModule } from 'primeng/treetable';
 import { Debug } from "../debug/debug";
 import { FieldsetModule } from 'primeng/fieldset';
 import { EloChange } from "../elo-change/elo-change";
+import { RankingChart } from '../chart/ranking-chart/ranking-chart';
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange, RankingChart],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',
