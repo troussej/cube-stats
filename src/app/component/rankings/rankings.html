@@ -11,7 +11,11 @@
         </ng-template>
         <ng-template #body let-rowNode let-stat="rowData">
             <tr [ttRow]="rowNode">
-
+                @if(stat.chart){
+                <td colspan="4">
+                    <app-player-elo-chart [player]="stat.player"></app-player-elo-chart>
+                </td>
+                }@else {
                 <td colspan="2">
                     <div class="inline-flex items-center gap-2">
                         <p-treetable-toggler [rowNode]="rowNode" />
@@ -29,7 +33,7 @@
                 </td>
 
                 <td>{{ stat.date | date:'dd/MM/yyyy' }}</td>
-
+                }
             </tr>
         </ng-template>
     </p-tree-table>

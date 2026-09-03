@@ -5,17 +5,16 @@ import _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
-import { SortableColumn, TableModule } from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
-import { Debug } from "../debug/debug";
 import { FieldsetModule } from 'primeng/fieldset';
 import { EloChange } from "../elo-change/elo-change";
-import { RankingChart } from '../chart/ranking-chart/ranking-chart';
 import { DraftsStoreService } from 'app/service/drafts.service';
 import { Game, PlayerEloChange } from 'app/model/model';
+import { PlayerEloChart } from "../chart/player-elo-chart/player-elo-chart";
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, SortableColumn, TreeTableModule, FieldsetModule, EloChange, RankingChart],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, TreeTableModule, FieldsetModule, EloChange, PlayerEloChart],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',
@@ -56,7 +55,7 @@ export class Rankings {
             date: elo?.game.date,
 
           },
-          children
+          children: [{ data: { chart: true, player } }, ...children]
         };
       })
       .orderBy('data.eloValue', 'desc')
