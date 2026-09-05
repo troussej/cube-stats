@@ -2,18 +2,21 @@
 
     <!-- <p-panel header="Stats couleurs">
         <ng-content #body> -->
-    <div class="grid grid-cols-6 gap-4">
-        <div class="col-span-1 grid grid-rows-2 grid-cols-1">
+    <div class="grid lg:grid-cols-6 max-lg:grid-cols-1 gap-4">
+        <div
+            class="col-span-1 grid grid-rows-1 grid-cols-1 sm:grid-rows-1 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-1 gap-4">
             <div class="">
-                <p-card header="Présence des couleurs dans les decks draftés">
+                <p-card header="Présence des couleurs dans les decks draftés" class="h-full">
+
                     <div class="">
                         <canvas baseChart [data]="buildPieChartData(colorRepartitionStats())" [type]="'doughnut'"
                             [options]="options" class="" [plugins]="plugins!"> </canvas>
                     </div>
+
                 </p-card>
             </div>
             <div class="">
-                <p-card header="Winrate de chacune des couleurs">
+                <p-card header="Winrate de chacune des couleurs" class="h-full">
                     <div class="">
                         <canvas baseChart [data]="buildPieChartData(colorWinrateStats())" [type]="'doughnut'"
                             [options]="options" class="" [plugins]="plugins!"> </canvas>
@@ -21,7 +24,7 @@
                 </p-card>
             </div>
         </div>
-        <div class="col-span-5">
+        <div class="lg:col-span-5">
             <p-card header="Répartition des combinaisons de couleurs">
                 <div class="">
                     <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder" optionLabel="label"
