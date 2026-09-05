@@ -1,7 +1,8 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, input, inject } from '@angular/core';
 import { Debug } from "../debug/debug";
 import _ from 'lodash';
 import { TagModule } from 'primeng/tag';
+import { ConfigService } from 'app/service/config.service';
 
 
 const SYMBOLS_RGX = /[WUBRG()]+/i
@@ -14,6 +15,8 @@ const SYMBOLS_RGX = /[WUBRG()]+/i
 })
 export class DeckTag {
 
+  public config = inject(ConfigService).config;
+
   public deckDescription = input.required<string>();
 
 
@@ -22,7 +25,9 @@ export class DeckTag {
     const symbols = this.deckDescription().match(SYMBOLS_RGX) || [];
     let manaString: string[] = [];
     if (symbols.length > 0) {
-      manaString = _.values(symbols[0]?.toLowerCase());
+      manaString = _.chain(symbols[0]?.toLowerCase()).values()
+        // .map(combo => this.config.colorOrder[combo as keyof typeof this.config.colorOrder] || combo)
+        .value();
     }
     const description = this.deckDescription().replace(SYMBOLS_RGX, '').trim();
     return { manaString, description };
