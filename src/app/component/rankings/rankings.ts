@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, inject, model } from '@angular/core';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { PlayersStoreService } from 'app/service/players.service';
+import { PlayerService } from 'app/service/players.service';
 import _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 import { DividerModule } from 'primeng/divider';
@@ -16,16 +16,17 @@ import { PlayerEloChart } from "../chart/player-elo-chart/player-elo-chart";
 import { FormsModule } from '@angular/forms';
 import { ConfigService } from 'app/service/config.service';
 import moment from 'moment';
+import { RouterLink } from "@angular/router";
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, DatePipe, TreeTableModule, FieldsetModule, EloChange, PlayerEloChart, ToggleSwitchModule, FormsModule],
+  imports: [PanelModule, TableModule, DividerModule, DatePipe, TreeTableModule, FieldsetModule, EloChange, PlayerEloChart, ToggleSwitchModule, FormsModule, RouterLink],
   selector: 'app-rankings',
   styleUrl: './rankings.css',
   templateUrl: './rankings.html',
 })
 export class Rankings {
 
-  public playersService = inject(PlayersStoreService);
+  public playersService = inject(PlayerService);
   public draftsService = inject(DraftsStoreService);
   public config = inject(ConfigService).config;
 

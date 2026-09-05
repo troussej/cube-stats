@@ -14,13 +14,16 @@
                 </ng-template>
                 <ng-template #body let-player>
                     <tr>
-                        <td>{{ player.name }}</td>
+                        <td>
+                            <a [routerLink]="['player',player.name]">{{ player.name }}</a>
+                        </td>
                         <td>
                             <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
                         </td>
                         <td class="whitespace-nowrap">{{ player.wins }}&nbsp;-&nbsp;{{ player.losses }}&nbsp;-&nbsp;{{
                             player.draws }}</td>
-                        <td><app-elo-change [elo]="totalEloChange(player, draftSession())"></app-elo-change></td>
+                        <td><app-elo-change
+                                [elo]="playerService.totalEloChange(player, draftSession())"></app-elo-change></td>
                     </tr>
                 </ng-template>
             </p-table>

@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { DraftsStoreService } from 'app/service/drafts.service';
 import _ from 'lodash';
 import { Play } from '@primeicons/angular';
-import { PlayersStoreService } from 'app/service/players.service';
+import { PlayerService } from 'app/service/players.service';
 import { Debug } from 'app/component/debug/debug';
 
 @Component({
@@ -16,7 +16,7 @@ import { Debug } from 'app/component/debug/debug';
 })
 export class RankingChart {
   public draftStoreService = inject(DraftsStoreService);
-  public playerService = inject(PlayersStoreService);
+  public playerService = inject(PlayerService);
 
 
   public plugins: ChartConfiguration['plugins'] = [];

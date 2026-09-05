@@ -1,10 +1,12 @@
 import { inject, Service, signal, WritableSignal } from "@angular/core";
-import { Game, PlayerEloChange } from "../model/model";
+import { DraftPlayer, DraftSession, Game, PlayerEloChange } from "../model/model";
 import _ from "lodash";
 import { ConfigService } from "./config.service";
 
+const FAKE_GAME = new Game(0, '', '', 0, 0, new Date(), '');
+
 @Service()
-export class PlayersStoreService {
+export class PlayerService {
 
     public config = inject(ConfigService).config;
 
@@ -63,5 +65,19 @@ export class PlayersStoreService {
         console.log(`New Elo for ${player1}: ${newElo1}, New Elo for ${player2}: ${newElo2}`);
 
         return [newElo1, newElo2];
+    }
+
+    public totalEloChange(player: DraftPlayer, draftSession: DraftSession) {
+
+        const changes = _.chain(draftSession.games)
+            .filter(game => game.player1 === player.name || game.player2 === player.name)
+            .map(game => game.player1 === player.name ?
+                { eloChange: game.eloChange1, round: game.round } : { eloChange: game.eloChange2, round: game.round })
+
+            .value();
+
+        const before = _.minBy(changes, 'round')?.eloChange?.oldElo ?? 0;
+        const after = _.maxBy(changes, 'round')?.eloChange?.elo ?? 0;
+        return new PlayerEloChange(player.name, after, before, FAKE_GAME);
     }
 }

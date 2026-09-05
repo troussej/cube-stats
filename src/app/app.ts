@@ -1,11 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, RouterLinkWithHref, RouterLink } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { Square } from '@primeicons/angular/square';
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MenubarModule, Square],
+  imports: [RouterOutlet, MenubarModule, Square, RouterLinkWithHref, RouterLink],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

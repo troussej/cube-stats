@@ -26,7 +26,9 @@
                 <td colspan="2">
                     <div class="inline-flex items-center gap-2">
                         <p-treetable-toggler [rowNode]="rowNode" />
-                        {{ stat.name }}
+                        <a [routerLink]="['player',stat.name]">
+                            {{ stat.name }}
+                        </a>
                         @if(stat.oppData){
                         r{{stat.round}} vs {{ stat.oppData.player }} ({{stat.oppData.oldElo}})
                         }

@@ -1,0 +1,52 @@
+<div class="m-4">
+    <div class="my-2 flex gap-2">
+        <button pButton (click)="router.navigate([''])" severity="secondary">
+            <svg data-p-icon="home"></svg>
+            Retour
+        </button>
+        <app-player-picker [name]="name()" (nameChange)="changePlayer($event)"></app-player-picker>
+    </div>
+
+    <p-panel>
+
+        <ng-content #header>
+            Statistiques de <b>{{ name() }}</b>
+        </ng-content>
+        <ng-content #content>
+            <div class="grid grid-cols-2 gap-4 my-2">
+                <div>
+                    <p-table [value]="draftPlayers()" size="small" [sortField]="'draftId'" [sortOrder]="-1">
+                        <ng-template #header>
+                            <tr>
+
+                                <th pSortableColumn="deck">Deck <p-sort-icon field="deck" /></th>
+                                <th pSortableColumn="draftId">Date <p-sort-icon field="draftId" /></th>
+                                <th pSortableColumn="score">Result <p-sort-icon field="score" />
+                                </th>
+                                <th>Elo Change</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template #body let-data>
+                            <tr>
+
+                                <td>
+                                    <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
+                                </td>
+                                <td>{{ data.draftId }}</td>
+                                <td class="whitespace-nowrap">{{ data.player.wins }}&nbsp;-&nbsp;{{ data.player.losses
+                                    }}&nbsp;-&nbsp;{{
+                                    data.player.draws }}</td>
+                                <td><app-elo-change
+                                        [elo]="playerService.totalEloChange(data.player,data.draft)"></app-elo-change>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div>
+                    <app-player-elo-chart [player]="name()"></app-player-elo-chart>
+                </div>
+            </div>
+        </ng-content>
+    </p-panel>
+</div>

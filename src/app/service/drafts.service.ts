@@ -1,6 +1,6 @@
 import { Service, WritableSignal, inject, signal } from "@angular/core";
 import { DraftPlayer, DraftSession, Game } from "../model/model";
-import { PlayersStoreService } from "./players.service";
+import { PlayerService } from "./players.service";
 import _ from "lodash";
 import { forkJoin, map, Observable } from "rxjs";
 import { SheetService } from "./sheet.service";
@@ -8,7 +8,7 @@ import { SheetService } from "./sheet.service";
 @Service()
 export class DraftsStoreService {
 
-    public playerService = inject(PlayersStoreService);
+    public playerService = inject(PlayerService);
     public sheetService = inject(SheetService);
 
     public drafts: WritableSignal<DraftSession[]> = signal<[]>([]);

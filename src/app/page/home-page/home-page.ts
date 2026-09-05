@@ -5,7 +5,7 @@ import { Debug } from 'app/component/debug/debug';
 import { DraftResult } from 'app/component/draft-result/draft-result';
 import { Rankings } from 'app/component/rankings/rankings';
 import { DraftsStoreService } from 'app/service/drafts.service';
-import { PlayersStoreService } from 'app/service/players.service';
+import { PlayerService } from 'app/service/players.service';
 import _ from 'lodash';
 import { DividerModule } from 'primeng/divider';
 import { PanelModule } from 'primeng/panel';
@@ -22,7 +22,7 @@ import { RankingChart } from "app/component/chart/ranking-chart/ranking-chart";
 })
 export class HomePage {
 
-  public playersService = inject(PlayersStoreService);
+  public playersService = inject(PlayerService);
   public draftsStoreService = inject(DraftsStoreService);
 
   public draftOptions = computed(() => {

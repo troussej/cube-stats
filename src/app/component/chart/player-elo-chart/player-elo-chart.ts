@@ -5,7 +5,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { DraftsStoreService } from 'app/service/drafts.service';
 import _ from 'lodash';
 import { Play } from '@primeicons/angular';
-import { PlayersStoreService } from 'app/service/players.service';
+import { PlayerService } from 'app/service/players.service';
 import { Debug } from 'app/component/debug/debug';
 import { PlayerEloChange } from 'app/model/model';
 
@@ -17,7 +17,7 @@ import { PlayerEloChange } from 'app/model/model';
 })
 export class PlayerEloChart {
   public draftStoreService = inject(DraftsStoreService);
-  public playerService = inject(PlayersStoreService);
+  public playerService = inject(PlayerService);
 
   public player = input.required<string>();
 

@@ -1,4 +1,5 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { Router } from '@angular/router';
 import { DraftPlayer, DraftSession, Game, PlayerEloChange } from 'app/model/model';
 import { RoundResult } from "../round-result/round-result";
 import { CardModule } from 'primeng/card';
@@ -12,9 +13,11 @@ import { DeckTag } from "../deck-tag/deck-tag";
 import { TableModule } from "primeng/table";
 import _ from 'lodash';
 import { EloChange } from "../elo-change/elo-change";
+import { PlayerService } from 'app/service/players.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule, DeckTag, SplitterModule, TableModule, EloChange],
+  imports: [RoundResult, PanelModule, Debug, DatePipe, TagModule, DeckTag, SplitterModule, TableModule, EloChange, RouterLink],
   selector: 'app-draft-result',
   styleUrl: './draft-result.css',
   templateUrl: './draft-result.html',
@@ -22,20 +25,9 @@ import { EloChange } from "../elo-change/elo-change";
 export class DraftResult {
 
   public draftSession = input.required<DraftSession>();
+  public playerService = inject(PlayerService);
 
-  private fakeGame = new Game(0, '', '', 0, 0, new Date(), '');
 
-  public totalEloChange(player: DraftPlayer, draftSession: DraftSession) {
 
-    const changes = _.chain(draftSession.games)
-      .filter(game => game.player1 === player.name || game.player2 === player.name)
-      .map(game => game.player1 === player.name ?
-        { eloChange: game.eloChange1, round: game.round } : { eloChange: game.eloChange2, round: game.round })
 
-      .value();
-
-    const before = _.minBy(changes, 'round')?.eloChange?.oldElo ?? 0;
-    const after = _.maxBy(changes, 'round')?.eloChange?.elo ?? 0;
-    return new PlayerEloChange(player.name, after, before, this.fakeGame);
-  }
 }
