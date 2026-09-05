@@ -24,6 +24,8 @@
         <div class="col-span-5">
             <p-card header="Répartition des combinaisons de couleurs">
                 <div class="">
+                    <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder" optionLabel="label"
+                        optionValue="value" aria-labelledby="basic" />
                     <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
                         [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>
                 </div>

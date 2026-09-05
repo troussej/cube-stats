@@ -1,4 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, model } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DraftService } from 'app/service/drafts.service';
 import _ from 'lodash';
 import { PanelModule } from "primeng/panel";
@@ -8,6 +9,7 @@ import { ChartConfiguration, Legend, Title } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { CardModule } from 'primeng/card';
 import { ConfigService } from 'app/service/config.service';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 interface DeckInfo {
   archetype: string;
@@ -24,7 +26,7 @@ interface DeckInfo {
 const SYMBOLS_RGX = /([WUBRG]+)(\([WUBRG]+\))?.*/i
 
 @Component({
-  imports: [PanelModule, BaseChartDirective, Debug, CardModule],
+  imports: [PanelModule, BaseChartDirective, Debug, CardModule, SelectButtonModule, FormsModule],
   selector: 'app-stats-couleurs',
   styleUrl: './stats-couleurs.css',
   templateUrl: './stats-couleurs.html',
@@ -33,6 +35,12 @@ export class StatsCouleurs {
 
   public draftService = inject(DraftService);
   public config = inject(ConfigService).config;
+
+  public combosSortOrder = model<'winrate' | 'count'>('count');
+  public comboSortOrderOptions = [
+    { label: 'Winrate', value: 'winrate' },
+    { label: 'Occurences', value: 'count' }
+  ];
 
   public colorRepartitionStats = computed(() => {
 
@@ -100,7 +108,7 @@ export class StatsCouleurs {
           count: Math.round(count / stats.total * 100),
           winrate: Math.round((stats.combosWinrate[combo] || 0) / count * 100)
         }))
-      .sortBy('count', 'desc')
+      .sortBy(this.combosSortOrder(), 'desc')
       .value()
 
     return {
