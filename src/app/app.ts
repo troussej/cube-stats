@@ -13,6 +13,7 @@ export class App {
   protected readonly title = signal('CUBE STATS');
   private router = inject(Router);
   public menuData: MenuItem[] = [];
+
   ngOnInit(): void {
     this.menuData = [
       {
@@ -23,6 +24,15 @@ export class App {
         }
 
       },
+      {
+        label: 'Stats couleurs',
+        icon: 'pi pi-palette',
+        command: () => {
+          this.router.navigate(['colors']);
+        }
+
+      },
     ]
   }
+
 }

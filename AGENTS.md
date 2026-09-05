@@ -35,6 +35,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
+- Always use the Module import for primeng imports
 
 ## State Management
 
@@ -49,6 +50,8 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Use native control flow (`@if`, `@for`, `@switch`) instead of `*ngIf`, `*ngFor`, `*ngSwitch`
 - Use the async pipe to handle observables
 - Do not assume globals like (`new Date()`) are available.
+- Use # for ng templates
+
 
 ## Services
 

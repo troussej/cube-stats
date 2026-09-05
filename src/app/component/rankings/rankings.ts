@@ -10,7 +10,7 @@ import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { FieldsetModule } from 'primeng/fieldset';
 import { EloChange } from "../elo-change/elo-change";
-import { DraftsStoreService } from 'app/service/drafts.service';
+import { DraftService } from 'app/service/drafts.service';
 import { Game, PlayerEloChange } from 'app/model/model';
 import { PlayerEloChart } from "../chart/player-elo-chart/player-elo-chart";
 import { FormsModule } from '@angular/forms';
@@ -27,7 +27,7 @@ import { RouterLink } from "@angular/router";
 export class Rankings {
 
   public playersService = inject(PlayerService);
-  public draftsService = inject(DraftsStoreService);
+  public draftsService = inject(DraftService);
   public config = inject(ConfigService).config;
 
   public actif = model<boolean>(true);

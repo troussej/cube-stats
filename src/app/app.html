@@ -1,13 +1,14 @@
 <div class="">
-  <div class="layout-topbar m-2">
-    <div class=" flex justify-center mb-2">
-      <a [routerLink]="['/']" class="flex items-center gap-2">
-        <svg data-p-icon="square" [size]="24"></svg><span>CUBE STATS</span>
-      </a>
-    </div>
-
+  <div class=" flex justify-center m-4">
+    <a [routerLink]="['/']" class="flex items-center gap-2">
+      <svg data-p-icon="square" [size]="24"></svg><span>CUBE STATS</span>
+    </a>
   </div>
 
+
+  <div class="m-4">
+    <p-menubar [model]="menuData"></p-menubar>
+  </div>
 
 
   <router-outlet />

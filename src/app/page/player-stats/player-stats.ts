@@ -3,7 +3,7 @@ import { ButtonDirective } from 'primeng/button';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerService } from '../../service/players.service';
-import { DraftsStoreService } from '../../service/drafts.service';
+import { DraftService } from '../../service/drafts.service';
 import { Panel, PanelModule } from "primeng/panel";
 import { PlayerEloChart } from "app/component/chart/player-elo-chart/player-elo-chart";
 import { SortableColumn, TableModule } from 'primeng/table';
@@ -25,7 +25,7 @@ export class PlayerStats {
 
   private route = inject(ActivatedRoute);
   public playerService = inject(PlayerService);
-  public draftsService = inject(DraftsStoreService);
+  public draftsService = inject(DraftService);
   public router = inject(Router);
 
   constructor() {

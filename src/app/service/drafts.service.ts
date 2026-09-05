@@ -6,7 +6,7 @@ import { forkJoin, map, Observable } from "rxjs";
 import { SheetService } from "./sheet.service";
 
 @Service()
-export class DraftsStoreService {
+export class DraftService {
 
     public playerService = inject(PlayerService);
     public sheetService = inject(SheetService);

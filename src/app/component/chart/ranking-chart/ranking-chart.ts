@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { DraftsStoreService } from 'app/service/drafts.service';
+import { DraftService } from 'app/service/drafts.service';
 import _ from 'lodash';
 import { Play } from '@primeicons/angular';
 import { PlayerService } from 'app/service/players.service';
@@ -15,7 +15,7 @@ import { Debug } from 'app/component/debug/debug';
   templateUrl: './ranking-chart.html',
 })
 export class RankingChart {
-  public draftStoreService = inject(DraftsStoreService);
+  public draftStoreService = inject(DraftService);
   public playerService = inject(PlayerService);
 
 

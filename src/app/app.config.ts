@@ -6,7 +6,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { providePrimeNG } from 'primeng/config';
 import { provideHttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { DraftsStoreService } from './service/drafts.service';
+import { DraftService } from './service/drafts.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,7 +33,7 @@ export const appConfig: ApplicationConfig = {
       console.log('provideAppInitializer');
       // return of(true);
       try {
-        const service = inject(DraftsStoreService);
+        const service = inject(DraftService);
         return service.init();
       } catch (err) {
         console.error('Error initializing DraftsStoreService:', err);

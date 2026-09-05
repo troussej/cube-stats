@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { DraftsStoreService } from 'app/service/drafts.service';
+import { DraftService } from 'app/service/drafts.service';
 import _ from 'lodash';
 import { Play } from '@primeicons/angular';
 import { PlayerService } from 'app/service/players.service';
@@ -16,7 +16,7 @@ import { PlayerEloChange } from 'app/model/model';
   templateUrl: './player-elo-chart.html',
 })
 export class PlayerEloChart {
-  public draftStoreService = inject(DraftsStoreService);
+  public draftStoreService = inject(DraftService);
   public playerService = inject(PlayerService);
 
   public player = input.required<string>();
