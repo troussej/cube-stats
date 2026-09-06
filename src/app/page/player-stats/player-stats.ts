@@ -40,6 +40,7 @@ export class PlayerStats {
       .map(data => ({
         player: data.player,
         draftId: data.draft.id,
+        date: data.draft.date,
         deck: data.player.deck,
         draft: data.draft,
         score: data.player.score

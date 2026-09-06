@@ -5,10 +5,11 @@ import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { EloChange } from '../elo-change/elo-change';
+import { RouterLink } from "@angular/router";
 
 
 @Component({
-  imports: [PanelModule, TableModule, DividerModule, EloChange],
+  imports: [PanelModule, TableModule, DividerModule, EloChange, RouterLink],
   selector: 'app-round-result',
   styleUrl: './round-result.css',
   templateUrl: './round-result.html',

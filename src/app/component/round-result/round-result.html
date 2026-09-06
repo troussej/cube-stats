@@ -11,9 +11,17 @@
         <ng-template #body let-game>
             <tr>
 
-                <td [class]="getClasses(1,game)">{{ game.player1 }}</td>
+                <td [class]="getClasses(1,game)">
+                    <a [routerLink]="['/player', game.player1]">
+                        {{ game.player1 }}
+                    </a>
+                </td>
                 <td>{{ game.score1}} - {{game.score2 }}</td>
-                <td [class]="getClasses(2,game)">{{ game.player2 }}</td>
+                <td [class]="getClasses(2,game)">
+                    <a [routerLink]="['/player', game.player2]">
+                        {{ game.player2 }}
+                    </a>
+                </td>
 
             </tr>
         </ng-template>
