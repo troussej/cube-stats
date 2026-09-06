@@ -27,8 +27,16 @@
         <div class="lg:col-span-5">
             <p-card header="Répartition des combinaisons de couleurs">
                 <div class="">
-                    <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder" optionLabel="label"
-                        optionValue="value" aria-labelledby="basic" />
+                    <div class="flex justify-left gap-4 m-2 text-sm">
+                        <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
+                            optionLabel="label" optionValue="value" aria-labelledby="basic" />
+                        <div class="flex justify-left  gap-4 m-2 text-sm">
+                            <label for="switch">Parties des {{config.nbMoisActif}} derniers mois</label>
+                            <p-toggleswitch [(ngModel)]="actif" [size]="'small'"
+                                [className]="'p-toggleswitch-sm'"></p-toggleswitch>
+
+                        </div>
+                    </div>
                     <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
                         [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>
                 </div>

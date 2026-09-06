@@ -10,6 +10,8 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { CardModule } from 'primeng/card';
 import { ConfigService } from 'app/service/config.service';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import moment from 'moment';
 
 interface DeckInfo {
   archetype: string;
@@ -26,7 +28,7 @@ interface DeckInfo {
 const SYMBOLS_RGX = /([WUBRG]+)(\([WUBRG]+\))?.*/i
 
 @Component({
-  imports: [PanelModule, BaseChartDirective, Debug, CardModule, SelectButtonModule, FormsModule],
+  imports: [PanelModule, BaseChartDirective, Debug, CardModule, SelectButtonModule, FormsModule, ToggleSwitchModule],
   selector: 'app-stats-couleurs',
   styleUrl: './stats-couleurs.css',
   templateUrl: './stats-couleurs.html',
@@ -37,15 +39,20 @@ export class StatsCouleurs {
   public config = inject(ConfigService).config;
 
   public combosSortOrder = model<'winrate' | 'count'>('count');
+  public actif = model<boolean>(true);
+
   public comboSortOrderOptions = [
+    { label: 'Occurences', value: 'count' },
     { label: 'Winrate', value: 'winrate' },
-    { label: 'Occurences', value: 'count' }
   ];
 
   public colorRepartitionStats = computed(() => {
 
+    const cutoffDate = moment().add(-1 * this.config.nbMoisActif, 'months');
+
     // for each color, compute the number of times it appears in decks for all drafts
     const stats = _.chain(this.draftService.drafts())
+      .filter(d => !this.actif() || moment(d.date).isAfter(cutoffDate))
       .flatMap(d => d.players)
       .map(p => p.deck)
       .map(this.extractColorInfo)
@@ -79,8 +86,11 @@ export class StatsCouleurs {
 
   public colorComboRepartitionStats = computed(() => {
 
+    const cutoffDate = moment().add(-1 * this.config.nbMoisActif, 'months');
+
     // for each color, compute the number of times it appears in decks for all drafts
     const stats = _.chain(this.draftService.drafts())
+      .filter(d => !this.actif() || moment(d.date).isAfter(cutoffDate))
       .flatMap(d => d.players)
       // .map(p => p.deck)
       .map(p => ({ deck: p.deck, wins: p.wins, games: p.wins + p.losses + p.draws }))
