@@ -24,7 +24,7 @@ export class DraftService {
 
         ]).pipe(
             map(([drafts, games]) => {
-
+                console.log('Initializing drafts and games');
                 const gamesByDraftId = _.groupBy(games, 'draftId');
                 const draftsById = _.keyBy(drafts, ds => ds.id);
 

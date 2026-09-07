@@ -1,13 +1,34 @@
 <div class="">
-  <div class=" flex justify-center m-4">
+  <div class=" flex justify-center m-2">
     <a [routerLink]="['/']" class="flex items-center gap-2">
-      <svg data-p-icon="square" [size]="24"></svg><span>CUBE STATS</span>
+      <span class="material-symbols-outlined text-[42px]!">
+        deployed_code
+      </span>
+      <span>CUBE STATS</span>
     </a>
   </div>
 
 
-  <div class="m-4">
-    <p-menubar [model]="menuData"></p-menubar>
+  <div class="mx-4">
+    <p-menubar [model]="menuData">
+      <ng-template #item let-item let-root="root">
+        <a pRipple class="flex items-center px-3 py-2 cursor-pointer gap-2">
+          @if (item.icon) {
+          <i [class]="'ms-auto pi ' +item.icon"></i>
+
+          }
+          @if (item.customIcon) {
+          <span class="{{ item.customIcon }}">
+            {{ item.customIconText }}
+          </span>
+          }
+          <span class="text-sm">{{ item.label }}</span>
+
+
+        </a>
+      </ng-template>
+
+    </p-menubar>
   </div>
 
 
