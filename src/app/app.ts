@@ -28,6 +28,14 @@ export class App {
 
       },
       {
+        label: 'Joueurs',
+        icon: 'pi pi-users',
+        command: () => {
+          this.router.navigate(['player']);
+        }
+
+      },
+      {
         label: 'Stats couleurs',
         icon: 'pi pi-palette',
         command: () => {

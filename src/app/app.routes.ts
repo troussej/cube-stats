@@ -5,6 +5,7 @@ import { StatsCouleurs } from './page/stats-couleurs/stats-couleurs';
 
 export const routes: Routes = [
     { path: '', component: HomePage },
+    { path: 'player', component: PlayerStats, },
     { path: 'player/:name', component: PlayerStats, },
     { path: 'colors', component: StatsCouleurs, },
 ];
