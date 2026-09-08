@@ -10,6 +10,14 @@ export class DraftPlayer {
         public draws: number = 0,
         public score: number = 0
     ) { }
+
+    result(): string {
+        let score = `${this.wins}-${this.losses}`;
+        if (this.draws > 0) {
+            score += `-${this.draws}`;
+        }
+        return score;
+    }
 }
 
 

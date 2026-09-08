@@ -58,11 +58,4 @@ export class PlayerStats {
     }
   }
 
-  score(p: DraftPlayer): string {
-    let score = `${p.wins}-${p.losses}`;
-    if (p.draws > 0) {
-      score += `-${p.draws}`;
-    }
-    return score;
-  }
 }

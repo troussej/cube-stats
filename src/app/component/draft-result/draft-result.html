@@ -20,8 +20,7 @@
                         <td>
                             <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
                         </td>
-                        <td class="whitespace-nowrap">{{ player.wins }}&nbsp;-&nbsp;{{ player.losses }}&nbsp;-&nbsp;{{
-                            player.draws }}</td>
+                        <td class="whitespace-nowrap">{{ player.result()}}</td>
                         <td><app-elo-change
                                 [elo]="playerService.totalEloChange(player, draftSession())"></app-elo-change></td>
                     </tr>

@@ -33,7 +33,7 @@
                                     <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
                                 </td>
                                 <td>{{ data.draftId }}</td>
-                                <td class="whitespace-nowrap">{{ score(data.player)}}
+                                <td class="whitespace-nowrap">{{ data.player.result()}}
 
                                 </td>
                                 <td><app-elo-change

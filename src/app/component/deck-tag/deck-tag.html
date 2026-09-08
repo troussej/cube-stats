@@ -1,7 +1,9 @@
-<p-tag severity="secondary">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<div class="flex flex-wrap gap-x-2">
 
-        <div class="flex gap-0.5">
+    @if(tag().manaString && tag().manaString.length > 0) {
+    <p-tag severity="secondary">
+
+        <div class="flex  gap-0.5">
             @for(s of tag().manaString; track s){
             @if( s==='(' || s===')'){
             <span> {{s}} </span>
@@ -13,9 +15,9 @@
             }
             }
         </div>
-        <span class="capitalize">
-            {{ tag().description}}
-        </span>
-
-    </div>
-</p-tag>
+    </p-tag>
+    }
+    <span class="capitalize">
+        {{ tag().description}}
+    </span>
+</div>
