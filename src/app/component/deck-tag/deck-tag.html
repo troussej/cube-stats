@@ -1,5 +1,5 @@
 <p-tag severity="secondary">
-    <div class="flex flex-rowflex-wrap gap-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
         <div class="flex gap-0.5">
             @for(s of tag().manaString; track s){
@@ -13,7 +13,7 @@
             }
             }
         </div>
-        <span class="capitalize whitespace-nowrap">
+        <span class="capitalize">
             {{ tag().description}}
         </span>
 

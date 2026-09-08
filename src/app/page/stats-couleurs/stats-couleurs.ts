@@ -171,9 +171,10 @@ export class StatsCouleurs {
   }
 
   public colorWinrateStats = computed(() => {
-
+    const cutoffDate = moment().add(-1 * this.config.nbMoisActif, 'months');
     // for each color, compute the number of times it appears in decks for all drafts
     const stats = _.chain(this.draftService.drafts())
+      .filter(d => !this.actif() || moment(d.date).isAfter(cutoffDate))
       .flatMap(d => d.players)
       .map(p => ({ deck: p.deck, wins: p.wins, games: p.wins + p.losses + p.draws }))
       .map(data => ({ colorInfo: this.extractColorInfo(data.deck), wins: data.wins, games: data.games }))
@@ -184,6 +185,7 @@ export class StatsCouleurs {
         acc.b += colorInfo.b ? data.wins : 0;
         acc.r += colorInfo.r ? data.wins : 0;
         acc.g += colorInfo.g ? data.wins : 0;
+        acc.total += data.games;
         acc.wTotal += colorInfo.w ? data.games : 0;
         acc.uTotal += colorInfo.u ? data.games : 0;
         acc.bTotal += colorInfo.b ? data.games : 0;
@@ -196,6 +198,7 @@ export class StatsCouleurs {
         b: 0,
         r: 0,
         g: 0,
+        total: 0,
         wTotal: 0,
         uTotal: 0,
         bTotal: 0,

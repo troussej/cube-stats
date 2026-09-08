@@ -13,8 +13,8 @@
             Statistiques de <b>{{ name() }}</b>
         </ng-content>
         <ng-content #content>
-            <div class="grid grid-cols-2 gap-4 my-2">
-                <div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 my-4">
+                <div class="border">
                     <p-table [value]="draftPlayers()" size="small" [sortField]="'draftId'" [sortOrder]="-1">
                         <ng-template #header>
                             <tr>
@@ -33,9 +33,9 @@
                                     <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
                                 </td>
                                 <td>{{ data.draftId }}</td>
-                                <td class="whitespace-nowrap">{{ data.player.wins }}&nbsp;-&nbsp;{{ data.player.losses
-                                    }}&nbsp;-&nbsp;{{
-                                    data.player.draws }}</td>
+                                <td class="whitespace-nowrap">{{ score(data.player)}}
+
+                                </td>
                                 <td><app-elo-change
                                         [elo]="playerService.totalEloChange(data.player,data.draft)"></app-elo-change>
                                 </td>
@@ -43,7 +43,7 @@
                         </ng-template>
                     </p-table>
                 </div>
-                <div>
+                <div class="border">
                     <app-player-elo-chart [player]="name()"></app-player-elo-chart>
                 </div>
             </div>

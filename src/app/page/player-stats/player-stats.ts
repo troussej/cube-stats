@@ -12,6 +12,7 @@ import { DeckTag } from "app/component/deck-tag/deck-tag";
 import { EloChange } from "app/component/elo-change/elo-change";
 import { PlayerPicker } from "app/component/player-picker/player-picker";
 import { Home } from '@primeicons/angular';
+import { DraftPlayer } from 'app/model/model';
 
 @Component({
   imports: [PanelModule, PlayerEloChart, TableModule, DatePipe, DeckTag, EloChange, SortableColumn, PlayerPicker, ButtonDirective, Home],
@@ -20,6 +21,7 @@ import { Home } from '@primeicons/angular';
   templateUrl: './player-stats.html',
 })
 export class PlayerStats {
+
 
   public name = model<string>('');
 
@@ -54,5 +56,13 @@ export class PlayerStats {
       this.name.set($event);
       this.router.navigate(['/player', $event]);
     }
+  }
+
+  score(p: DraftPlayer): string {
+    let score = `${p.wins}-${p.losses}`;
+    if (p.draws > 0) {
+      score += `-${p.draws}`;
+    }
+    return score;
   }
 }

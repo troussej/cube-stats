@@ -2,6 +2,11 @@
 
     <!-- <p-panel header="Stats couleurs">
         <ng-content #body> -->
+    <div class="flex justify-left  gap-4 m-2 text-sm">
+        <label for="switch">Parties des {{config.nbMoisActif}} derniers mois</label>
+        <p-toggleswitch [(ngModel)]="actif" [size]="'small'" [className]="'p-toggleswitch-sm'"></p-toggleswitch>
+
+    </div>
     <div class="grid lg:grid-cols-6 max-lg:grid-cols-1 gap-4">
         <div
             class="col-span-1 grid grid-rows-1 grid-cols-1 sm:grid-rows-1 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-1 gap-4">
@@ -25,17 +30,16 @@
             </div>
         </div>
         <div class="lg:col-span-5">
-            <p-card header="Répartition des combinaisons de couleurs">
+            <p-card>
                 <div class="">
-                    <div class="flex justify-left gap-4 m-2 text-sm">
-                        <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
-                            optionLabel="label" optionValue="value" aria-labelledby="basic" />
-                        <div class="flex justify-left  gap-4 m-2 text-sm">
-                            <label for="switch">Parties des {{config.nbMoisActif}} derniers mois</label>
-                            <p-toggleswitch [(ngModel)]="actif" [size]="'small'"
-                                [className]="'p-toggleswitch-sm'"></p-toggleswitch>
+                    <div class="flex content-center gap-4">
 
+                        <span class="flex self-center">Répartition des combinaisons de couleurs</span>
+                        <div class="">
+                            <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
+                                optionLabel="label" optionValue="value" aria-labelledby="basic" />
                         </div>
+
                     </div>
                     <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
                         [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>
