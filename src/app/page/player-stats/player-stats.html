@@ -14,7 +14,7 @@
         </ng-content>
         <ng-content #content>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 my-4">
-                <div class="border">
+                <div class="">
                     <p-table [value]="draftPlayers()" size="small" [sortField]="'draftId'" [sortOrder]="-1">
                         <ng-template #header>
                             <tr>
@@ -43,7 +43,7 @@
                         </ng-template>
                     </p-table>
                 </div>
-                <div class="border">
+                <div class="">
                     <app-player-elo-chart [player]="name()"></app-player-elo-chart>
                 </div>
             </div>

@@ -12,9 +12,12 @@
   <div class="mx-4">
     <p-menubar [model]="menuData">
       <ng-template #item let-item let-root="root">
-        <a pRipple class="flex items-center px-3 py-2 cursor-pointer gap-2">
+        <a pRipple class="flex items-center justify-start px-3 py-2 cursor-pointer gap-2">
           @if (item.icon) {
-          <i [class]="'ms-auto pi ' +item.icon"></i>
+
+          <span>
+            <i [class]="'ms-auto pi ' +item.icon"></i>
+          </span>
 
           }
           @if (item.customIcon) {
