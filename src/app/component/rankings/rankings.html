@@ -20,7 +20,7 @@
             <tr [ttRow]="rowNode">
                 @if(stat.chart){
                 <td colspan="4">
-                    <app-player-elo-chart [player]="stat.player"></app-player-elo-chart>
+                    <app-player-elo-chart [players]="[stat.player]"></app-player-elo-chart>
                 </td>
                 }@else {
                 <td colspan="2">

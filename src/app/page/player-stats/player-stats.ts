@@ -23,7 +23,7 @@ import { DraftPlayer } from 'app/model/model';
 export class PlayerStats {
 
 
-  public name = model<string>('');
+  public names = model<string[]>([]);
 
   private route = inject(ActivatedRoute);
   public playerService = inject(PlayerService);
@@ -31,14 +31,14 @@ export class PlayerStats {
   public router = inject(Router);
 
   constructor() {
-    this.name.set(this.route.snapshot.paramMap.get('name') ?? '');
+    this.names.set(!_.isNil(this.route.snapshot.paramMap.get('name')) ? this.route.snapshot.paramMap.get('name')?.split(',')! : []);
   }
 
   public draftPlayers = computed(() => {
     return _.chain(this.draftsService.drafts())
       .map(draft => ({ players: draft.players, draft }))
       .flatMap(({ players, draft }) => players.map(player => ({ player, draft })))
-      .filter((data) => data.player.name === this.name())
+      .filter((data) => this.names().includes(data.player.name))
       .map(data => ({
         player: data.player,
         draftId: data.draft.id,
@@ -47,14 +47,15 @@ export class PlayerStats {
         draft: data.draft,
         score: data.player.score
       }))
+      .groupBy('player.name')
       .value()
   });
 
-  changePlayer($event?: string) {
+  changePlayer($event?: string[]) {
     console.log('Changing player to', $event);
     if ($event) {
-      this.name.set($event);
-      this.router.navigate(['/player', $event]);
+      this.names.set($event);
+      this.router.navigate(['/player', $event.join(',')]);
     }
   }
 

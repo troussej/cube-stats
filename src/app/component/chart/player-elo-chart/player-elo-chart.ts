@@ -19,37 +19,35 @@ export class PlayerEloChart {
   public draftStoreService = inject(DraftService);
   public playerService = inject(PlayerService);
 
-  public player = input.required<string>();
+  public players = input.required<string[]>();
 
   public plugins: ChartConfiguration['plugins'] = [];
 
-  options: ChartConfiguration['options'] = {
-
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: {
-      mode: 'index',
-      intersect: false,
-
-    },
-
-    plugins: {
-      legend: {
-        display: false
+  options = computed<ChartConfiguration['options']>(() => {
+    return {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: {
+        mode: 'index',
+        intersect: false,
       },
-      title: {
-        display: false,
+      plugins: {
+        legend: {
+          display: this.players().length > 1
+        },
+        title: {
+          display: false,
+        }
+      },
+      scales: {
+        elo: {
+          type: 'linear',
+          display: true,
+          position: 'left',
+        }
       }
-    },
-    scales: {
-
-      elo: {
-        type: 'linear',
-        display: true,
-        position: 'left',
-      }
-    }
-  };
+    };
+  });
 
   public dateLabels = computed<string[]>(() => {
     return _.chain(this.draftStoreService.drafts())
@@ -59,55 +57,57 @@ export class PlayerEloChart {
       .value();
   });
 
-  public buildEloData = computed(() => {
+  public buildEloData = computed<(name: string) => number[]>(() => {
 
-    const dates = _.chain(this.draftStoreService.drafts())
-      .orderBy(['date'], ['asc'])
-      .map(draft => draft.date.toLocaleDateString())
-      .value();
+    return (name: string) => {
 
-    const dateToElo = _.chain(this.playerService.playersElo())
-      .filter({ 'player': this.player() })
-      .orderBy(['game.date'], ['asc'])
-      .groupBy((c: PlayerEloChange) => c.game.date.toLocaleDateString())
-      .mapValues((changesOfPlayerByDate, date) => {
+      const dates = _.chain(this.draftStoreService.drafts())
+        .orderBy(['date'], ['asc'])
+        .map(draft => draft.date.toLocaleDateString())
+        .value();
 
-        return _.maxBy(changesOfPlayerByDate, 'game.round')?.elo ?? 0;
-      })
-      .value();
+      const dateToElo = _.chain(this.playerService.playersElo())
+        .filter({ player: name })
+        .orderBy(['game.date'], ['asc'])
+        .groupBy((c: PlayerEloChange) => c.game.date.toLocaleDateString())
+        .mapValues((changesOfPlayerByDate, date) => {
 
-    return _.chain(dates)
-      .map((date) => {
-        return dateToElo[date];
-      })
-      .value();
+          return _.maxBy(changesOfPlayerByDate, 'game.round')?.elo ?? 0;
+        })
+        .value();
+
+      return _.chain(dates)
+        .map((date) => {
+          return dateToElo[date];
+        })
+        .value();
 
 
-
+    };
   });
+
 
   public buildDataSet(chartData: any, player: string) {
     return {
       label: player,
       data: chartData,
       yAxisID: 'elo',
+      cubicInterpolationMode: 'monotone',
+      fill: false,
+      spanGaps: true
+
     };
   }
 
+
+
   public data = computed<ChartConfiguration['data']>(() => {
+
     return {
       labels: this.dateLabels(),
-      datasets: [
-        {
-          label: this.player(),
-          data: this.buildEloData(),
-          yAxisID: 'elo',
-          cubicInterpolationMode: 'monotone',
-          fill: true,
-          spanGaps: true
-        }
-      ]
-    };
+      datasets: _.map(this.players(), player => this.buildDataSet(this.buildEloData()(player), player))
+    }
+
   });
 
 }

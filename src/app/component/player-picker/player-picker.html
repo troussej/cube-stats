@@ -1,1 +1,2 @@
-<p-select [options]="playersService.players()" [(ngModel)]="name" placeholder="Selectionnez..." [filter]="true" />
+<p-select [options]="playersService.players()" [(ngModel)]="names" placeholder="Selectionnez..." [filter]="true"
+    [showClear]="true" [multiple]="true" />

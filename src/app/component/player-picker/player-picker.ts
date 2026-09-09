@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class PlayerPicker {
 
-  name = model<string>();
+  names = model<string[]>([]);
 
 
   public playersService = inject(PlayerService);

@@ -4,49 +4,53 @@
             <svg data-p-icon="home"></svg>
             Retour
         </button>
-        <app-player-picker [name]="name()" (nameChange)="changePlayer($event)"></app-player-picker>
+        <app-player-picker [names]="names()" (namesChange)="changePlayer($event)"></app-player-picker>
     </div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        <div class="col-span-1 lg:col-span-3 lg:order-last  ">
+            <app-player-elo-chart [players]="names()"></app-player-elo-chart>
+        </div>
+        <div class="grid col-span-1 lg:col-span-1 gap-4">
+            @for(name of names();track name){
+            <div class="">
+                <p-panel>
+                    <ng-content #header>
+                        Statistiques de <b>{{ name }}</b>
+                    </ng-content>
+                    <ng-content #content>
 
-    <p-panel>
+                        <p-table [value]="draftPlayers()[name]" size="small" [sortField]="'draftId'" [sortOrder]="-1">
+                            <ng-template #header>
+                                <tr>
 
-        <ng-content #header>
-            Statistiques de <b>{{ name() }}</b>
-        </ng-content>
-        <ng-content #content>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 my-4">
-                <div class="">
-                    <p-table [value]="draftPlayers()" size="small" [sortField]="'draftId'" [sortOrder]="-1">
-                        <ng-template #header>
-                            <tr>
+                                    <th pSortableColumn="deck">Deck <p-sort-icon field="deck" /></th>
+                                    <th pSortableColumn="date">Date <p-sort-icon field="date" /></th>
+                                    <th pSortableColumn="score">Result <p-sort-icon field="score" />
+                                    </th>
+                                    <th>Elo Change</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template #body let-data>
+                                <tr>
 
-                                <th pSortableColumn="deck">Deck <p-sort-icon field="deck" /></th>
-                                <th pSortableColumn="date">Date <p-sort-icon field="date" /></th>
-                                <th pSortableColumn="score">Result <p-sort-icon field="score" />
-                                </th>
-                                <th>Elo Change</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template #body let-data>
-                            <tr>
+                                    <td>
+                                        <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
+                                    </td>
+                                    <td>{{ data.draftId }}</td>
+                                    <td class="whitespace-nowrap">{{ data.player.result()}}
 
-                                <td>
-                                    <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
-                                </td>
-                                <td>{{ data.draftId }}</td>
-                                <td class="whitespace-nowrap">{{ data.player.result()}}
-
-                                </td>
-                                <td><app-elo-change
-                                        [elo]="playerService.totalEloChange(data.player,data.draft)"></app-elo-change>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-                <div class="">
-                    <app-player-elo-chart [player]="name()"></app-player-elo-chart>
-                </div>
+                                    </td>
+                                    <td><app-elo-change
+                                            [elo]="playerService.totalEloChange(data.player,data.draft)"></app-elo-change>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </ng-content>
+                </p-panel>
             </div>
-        </ng-content>
-    </p-panel>
+            }
+        </div>
+
+    </div>
 </div>
