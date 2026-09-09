@@ -4,7 +4,9 @@
             <svg data-p-icon="home"></svg>
             Retour
         </button>
-        <app-player-picker [names]="names()" (namesChange)="changePlayer($event)"></app-player-picker>
+        <div class="w-full">
+            <app-player-picker [names]="names()" (namesChange)="changePlayer($event)"></app-player-picker>
+        </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
         <div class="col-span-1 lg:col-span-3 lg:order-last  ">
