@@ -10,10 +10,10 @@
 
     <div class="lg:col-span-6 flex content-center gap-4 text-sm">
 
-        <span class="flex self-center">Répartition des combinaisons de couleurs</span>
+        <span class="flex self-center">Trier par:</span>
         <div class="">
             <p-selectbutton [options]="sortOrderOptions" [(ngModel)]="sortOrder" optionLabel="label" optionValue="value"
-                aria-labelledby="basic" />
+                [size]="'small'" aria-labelledby="basic" />
         </div>
 
     </div>

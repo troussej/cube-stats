@@ -5,13 +5,14 @@ import _ from 'lodash';
 import { PanelModule } from "primeng/panel";
 import { Debug } from "app/component/debug/debug";
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration, Legend, Title } from 'chart.js';
+import { ChartConfiguration, ChartTypeRegistry, Legend, Title, TooltipCallbacks, TooltipItem } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { CardModule } from 'primeng/card';
 import { ConfigService } from 'app/service/config.service';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import moment from 'moment';
+
 
 interface DeckInfo {
   archetype: string;
@@ -116,7 +117,7 @@ export class StatsCouleurs {
       .map((count, combo) => (
         {
           combo: this.config.colorOrder[combo as keyof typeof this.config.colorOrder] || combo,
-          count: Math.round(count / stats.total * 100),
+          count,
           winrate: Math.round((stats.combosWinrate[combo] || 0) / count * 100)
         }))
       .sortBy(this.combosSortOrder(), 'desc')
@@ -125,34 +126,36 @@ export class StatsCouleurs {
     return {
       labels: occur.map(r => r.combo),
       occurences: occur.map(r => r.count),
-      winrates: occur.map(r => r.winrate),
+      winrates: occur.map(r => r.winrate)
     };
 
   });
 
-  public buildBarChartData(dataSet: { labels: string[], occurences: number[], winrates: number[] }) {
+  public buildBarChartData(dataSet: { [key: string]: (string | number)[] }) {
 
     return {
-      labels: dataSet.labels,
+      labels: dataSet['labels'],
       datasets: [
         {
           label: 'Occurences',
-          data: dataSet.occurences,
+          data: dataSet['occurences'],
           //  borderColor: '#fff',
           // borderWidth: 1,
           backgroundColor: Object.values(this.config.colors),
           borderRadius: 5,
           yAxisID: 'y',
+
         },
         {
           label: 'Winrate',
-          data: dataSet.winrates,
+          data: dataSet['winrates'],
           borderColor: '#fff',
           borderWidth: 1,
           backgroundColor: '#222',
           borderRadius: 5,
           yAxisID: 'percent',
-        }
+        },
+
       ]
     };
   }
@@ -255,10 +258,22 @@ export class StatsCouleurs {
         display: true,
 
         formatter: (value: number, context: any) => {
+
           return value + "%";
         },
 
         color: '#000',
+      },
+      tooltip: {
+
+        callbacks: {
+          label: (context: TooltipItem<keyof ChartTypeRegistry>) => {
+
+            const value = context.raw || 0;
+            return value + '%';
+
+          }
+        }
       }
     },
     scales: {
@@ -288,10 +303,28 @@ export class StatsCouleurs {
           size: 10,
         },
         formatter: (value: number, context: any) => {
+          if (context.datasetIndex == 0) {
+            return value;
+          }
           return value + "%";
         },
 
         color: '#fff',
+      },
+      tooltip: {
+        mode: 'index',
+        callbacks: {
+          label: (context: any) => {
+            if (context.datasetIndex == 0) { // occurences
+              const value = context.raw || 0;
+              const total = context.chart.data.datasets[0].data.reduce((acc: number, val: number) => acc + val, 0);
+              return `Nb: ${value} (${((value / total) * 100).toFixed(0)}%)`;
+            } else { // winrate
+              const value = context.raw || 0;
+              return `Winrate: ${value}%`;
+            }
+          }
+        }
       }
     },
     scales: {

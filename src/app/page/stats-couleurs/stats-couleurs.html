@@ -32,14 +32,13 @@
         <div class="lg:col-span-5">
 
             <div class="">
-                <div class="flex content-center gap-4">
-
-                    <span class="flex self-center">Répartition des combinaisons de couleurs</span>
-                    <div class="">
+                <div class="">
+                    <p class="font-bold">Répartition des combinaisons de couleurs</p>
+                    <div class="flex flex-row align-items-center">
+                        <span class="flex self-center">Trier par:</span>
                         <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
-                            optionLabel="label" optionValue="value" aria-labelledby="basic" />
+                            optionLabel="label" optionValue="value" aria-labelledby="basic" [size]="'small'" />
                     </div>
-
                 </div>
                 <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
                     [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>

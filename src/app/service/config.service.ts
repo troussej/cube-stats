@@ -16,7 +16,11 @@ export class ConfigService {
                 games: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSTGX1dGSR79rGFwMxCH2KD94PaHLif8fW-rG5WmOls9nMEm1eSpu6iamFSbTU6z8TPGh51xzmCt1tJ/pub?gid=1483125036&single=true&output=csv",
             },
             archetypes: {
-                mapping: { 'draw 7': 'draw_7' } as { [key: string]: string },
+                mapping: {
+                    'draw 7': 'draw_7',
+                    'show and tell': 'show_and_tell'
+
+                } as { [key: string]: string },
                 reject: ['na', 'xxx', '']
             },
             colors: {

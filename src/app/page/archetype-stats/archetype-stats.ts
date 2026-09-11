@@ -82,7 +82,7 @@ export class ArchetypeStats {
     const data = _.chain(this.archetypesData().archetypes)
       .map((d, archetype) => ({
         archetype,
-        occurences: d.games > 0 ? Math.round((d.games / this.archetypesData().total) * 100) : 0,
+        occurences: d.games,
         winrate: d.games > 0 ? Math.round((d.wins / d.games) * 100) : 0,
       }))
       .sortBy(this.sortOrder(), 'asc')
@@ -147,11 +147,30 @@ export class ArchetypeStats {
         font: {
           size: 10,
         },
+
         formatter: (value: number, context: any) => {
+          if (context.datasetIndex == 0) {
+            return value;
+          }
           return value + "%";
         },
 
         color: '#fff',
+      },
+      tooltip: {
+        mode: 'index',
+        callbacks: {
+          label: (context: any) => {
+            if (context.datasetIndex == 0) { // occurences
+              const value = context.raw || 0;
+              const total = context.chart.data.datasets[0].data.reduce((acc: number, val: number) => acc + val, 0);
+              return `Nb: ${value}/${total} (${((value / total) * 100).toFixed(0)}%)`;
+            } else { // winrate
+              const value = context.raw || 0;
+              return `Winrate: ${value}%`;
+            }
+          }
+        }
       }
     },
     scales: {
