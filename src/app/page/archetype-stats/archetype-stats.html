@@ -1,0 +1,33 @@
+<div class="m-4 h-full">
+
+    <!-- <p-panel header="Stats couleurs">
+        <ng-content #body> -->
+    <div class="flex justify-left  gap-4 text-sm">
+        <label for="switch">Parties des {{config.nbMoisActif}} derniers mois</label>
+        <p-toggleswitch [(ngModel)]="actif" [size]="'small'" [className]="'p-toggleswitch-sm'"></p-toggleswitch>
+
+    </div>
+
+    <div class="lg:col-span-6 flex content-center gap-4 text-sm">
+
+        <span class="flex self-center">Répartition des combinaisons de couleurs</span>
+        <div class="">
+            <p-selectbutton [options]="sortOrderOptions" [(ngModel)]="sortOrder" optionLabel="label" optionValue="value"
+                aria-labelledby="basic" />
+        </div>
+
+    </div>
+    <div class="grid grid-cols-1  xl:grid-cols-8 mt-2">
+        <div></div>
+        <div class="xl:col-span-6">
+
+            <canvas baseChart [data]="chartData()" [type]="'bar'" [options]="optionsBar" class="" [plugins]="plugins!">
+            </canvas>
+        </div>
+        <div></div>
+    </div>
+
+
+    <!--</ng-content>
+     </p-panel> -->
+</div>

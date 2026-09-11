@@ -44,6 +44,14 @@ export class App {
 
       },
       {
+        label: 'Archétypes',
+        icon: 'pi pi-sitemap',
+        command: () => {
+          this.router.navigate(['archetypes']);
+        }
+
+      },
+      {
         label: 'Liste du cube',
         customIcon: 'material-symbols-outlined text-[20px]!',
         customIconText: 'deployed_code',

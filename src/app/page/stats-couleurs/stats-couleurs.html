@@ -30,21 +30,21 @@
             </div>
         </div>
         <div class="lg:col-span-5">
-            <p-card>
-                <div class="">
-                    <div class="flex content-center gap-4">
 
-                        <span class="flex self-center">Répartition des combinaisons de couleurs</span>
-                        <div class="">
-                            <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
-                                optionLabel="label" optionValue="value" aria-labelledby="basic" />
-                        </div>
+            <div class="">
+                <div class="flex content-center gap-4">
 
+                    <span class="flex self-center">Répartition des combinaisons de couleurs</span>
+                    <div class="">
+                        <p-selectbutton [options]="comboSortOrderOptions" [(ngModel)]="combosSortOrder"
+                            optionLabel="label" optionValue="value" aria-labelledby="basic" />
                     </div>
-                    <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
-                        [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>
+
                 </div>
-            </p-card>
+                <canvas baseChart [data]="buildBarChartData(colorComboRepartitionStats())" [type]="'bar'"
+                    [options]="optionsBar" class="" [plugins]="plugins!"> </canvas>
+            </div>
+
         </div>
     </div>
     <!--</ng-content>

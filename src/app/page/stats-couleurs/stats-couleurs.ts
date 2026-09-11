@@ -25,7 +25,7 @@ interface DeckInfo {
 }
 
 
-const SYMBOLS_RGX = /([WUBRG]+)(\([WUBRG]+\))?.*/i
+
 
 @Component({
   imports: [PanelModule, BaseChartDirective, Debug, CardModule, SelectButtonModule, FormsModule, ToggleSwitchModule],
@@ -55,7 +55,7 @@ export class StatsCouleurs {
       .filter(d => !this.actif() || moment(d.date).isAfter(cutoffDate))
       .flatMap(d => d.players)
       .map(p => p.deck)
-      .map(this.extractColorInfo)
+      .map(this.extractColorInfo.bind(this))
       .reduce((acc, deck) => {
 
         acc.w += deck.w ? 1 : 0;
@@ -87,6 +87,7 @@ export class StatsCouleurs {
   public colorComboRepartitionStats = computed(() => {
 
     const cutoffDate = moment().add(-1 * this.config.nbMoisActif, 'months');
+
 
     // for each color, compute the number of times it appears in decks for all drafts
     const stats = _.chain(this.draftService.drafts())
@@ -218,7 +219,7 @@ export class StatsCouleurs {
   });
 
   public extractColorInfo(deck: string): DeckInfo {
-    const match = SYMBOLS_RGX.exec(deck);
+    const match = this.config.deckNameRegex.exec(deck);
     const colors = match ? match[1]?.split('') : [];
     const splash = match ? match[2]?.split('') : [];
     return {
