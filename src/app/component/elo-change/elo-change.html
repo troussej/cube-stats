@@ -1,7 +1,7 @@
 @if(elo() && elo()?.elo){
 
-<div class="flex flex-wrap items-center justify-end gap-1">
-    <div>
+<div class="flex flex-wrap  items-center justify-end gap-1" [pTooltip]="diff()">
+    <div class="">
 
         {{elo()!.oldElo}}
     </div>
