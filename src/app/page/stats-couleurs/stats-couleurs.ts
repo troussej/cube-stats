@@ -277,7 +277,13 @@ export class StatsCouleurs {
 
     responsive: true,
     maintainAspectRatio: true,
-    borderColor: '#18181b',
+    borderColor(context: any) {
+      if (context.dataIndex === 1) {
+        return 'transparent';
+      }
+      return '#18181b';
+
+    },
 
     plugins: {
       legend: {
@@ -306,6 +312,9 @@ export class StatsCouleurs {
           return e.dataIndex === 0;
         },
         callbacks: {
+          title(tooltipItems) {
+            return '';
+          },
           label: (context: TooltipItem<keyof ChartTypeRegistry>) => {
             if (context.dataIndex === 1) {
               return '';

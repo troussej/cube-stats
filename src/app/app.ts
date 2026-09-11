@@ -37,7 +37,7 @@ export class App {
       },
       {
         label: 'Stats couleurs',
-        icon: 'pi pi-palette',
+        icon: 'pi pi-chart-pie',
         command: () => {
           this.router.navigate(['colors']);
         }
@@ -45,7 +45,7 @@ export class App {
       },
       {
         label: 'Archétypes',
-        icon: 'pi pi-sitemap',
+        icon: 'pi pi-chart-bar',
         command: () => {
           this.router.navigate(['archetypes']);
         }
@@ -53,8 +53,7 @@ export class App {
       },
       {
         label: 'Liste du cube',
-        customIcon: 'material-symbols-outlined text-[20px]!',
-        customIconText: 'deployed_code',
+        icon: 'pi pi-list',
         command: () => {
           window.open(this.config.cubeUrl, '_blank');
         }

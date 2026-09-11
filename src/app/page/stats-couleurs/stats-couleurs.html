@@ -11,7 +11,8 @@
         <div
             class="lg:col-span-1 grid grid-rows-1 grid-cols-1 sm:grid-rows-1 sm:grid-cols-2 lg:grid-rows-2 lg:grid-cols-1 gap-4">
             <div class="">
-                <p-card header="Présence des couleurs dans les decks draftés" class="h-full">
+                <p-card header="Présence des couleurs dans les decks draftés" class="h-full"
+                    [pt]="{ title: { class: 'text-sm!' } }">
 
                     <div class="">
                         <canvas baseChart [data]="buildPieChartData(colorRepartitionStats())" [type]="'pie'"
@@ -21,7 +22,7 @@
                 </p-card>
             </div>
             <div class="">
-                <p-card header="Winrate de chacune des couleurs" class="h-full">
+                <p-card header="Winrate de chacune des couleurs" class="h-full" [pt]="{ title: { class: 'text-sm!' } }">
                     <div class="">
                         <canvas baseChart [data]="buildPieChartData(colorWinrateStats())" [type]="'pie'"
                             [options]="optionsPie" class="" [plugins]="plugins!"> </canvas>
