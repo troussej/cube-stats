@@ -75,13 +75,13 @@ export class StatsCouleurs {
         total: 0
       })
       .value();
-    return [
-      Math.round(stats.w / stats.total * 100),
-      Math.round(stats.u / stats.total * 100),
-      Math.round(stats.b / stats.total * 100),
-      Math.round(stats.r / stats.total * 100),
-      Math.round(stats.g / stats.total * 100)
-    ]
+    return {
+      W: [stats.w, stats.total - stats.w],
+      U: [stats.u, stats.total - stats.u],
+      B: [stats.b, stats.total - stats.b],
+      R: [stats.r, stats.total - stats.r],
+      G: [stats.g, stats.total - stats.g]
+    };
 
   });
 
@@ -160,15 +160,43 @@ export class StatsCouleurs {
     };
   }
 
-  public buildPieChartData(dataSet: number[]) {
+  public buildPieChartData(dataSet: {
+    W: number[];
+    U: number[];
+    B: number[];
+    R: number[];
+    G: number[];
+  }) {
 
     return {
       labels: ['W', 'U', 'B', 'R', 'G'],
       datasets: [
         {
-          data: dataSet,
-          backgroundColor: Object.values(this.config.colors),
+          label: 'W',
+          backgroundColor: [this.config.colors.W, 'rgba(0,0,0,0)'],
+          data: dataSet.W,
+          //  backgroundColor: Object.values(this.config.colors),
 
+        },
+        {
+          label: 'U',
+          backgroundColor: [this.config.colors.U, 'rgba(0,0,0,0)'],
+          data: dataSet.U,
+        },
+        {
+          label: 'B',
+          backgroundColor: [this.config.colors.B, 'rgba(0,0,0,0)'],
+          data: dataSet.B,
+        },
+        {
+          label: 'R',
+          backgroundColor: [this.config.colors.R, 'rgba(0,0,0,0)'],
+          data: dataSet.R,
+        },
+        {
+          label: 'G',
+          backgroundColor: [this.config.colors.G, 'rgba(0,0,0,0)'],
+          data: dataSet.G,
         }
       ]
     };
@@ -212,13 +240,17 @@ export class StatsCouleurs {
       })
       .value();
 
-    return [
-      Math.round(stats.w / stats.wTotal * 100),
-      Math.round(stats.u / stats.uTotal * 100),
-      Math.round(stats.b / stats.bTotal * 100),
-      Math.round(stats.r / stats.rTotal * 100),
-      Math.round(stats.g / stats.gTotal * 100)
-    ]
+    const res = {
+      W: [Math.round(stats.w / stats.wTotal * 100)],
+      U: [Math.round(stats.u / stats.uTotal * 100)],
+      B: [Math.round(stats.b / stats.bTotal * 100)],
+      R: [Math.round(stats.r / stats.rTotal * 100)],
+      G: [Math.round(stats.g / stats.gTotal * 100)]
+    };
+    _.forEach(res, (value, key) => {
+      value.push(100 - value[0]);
+    });
+    return res;
   });
 
   public extractColorInfo(deck: string): DeckInfo {
@@ -241,7 +273,7 @@ export class StatsCouleurs {
 
   public plugins: ChartConfiguration['plugins'] = [ChartDataLabels];
 
-  public options: ChartConfiguration['options'] = {
+  public optionsPie: ChartConfiguration['options'] = {
 
     responsive: true,
     maintainAspectRatio: true,
@@ -258,17 +290,26 @@ export class StatsCouleurs {
         display: true,
 
         formatter: (value: number, context: any) => {
-
+          if (context.dataIndex === 1) {
+            return '';
+          }
           return value + "%";
         },
 
         color: '#000',
+        font: {
+          size: 11
+        }
       },
       tooltip: {
-
+        filter(e, index, array, data) {
+          return e.dataIndex === 0;
+        },
         callbacks: {
           label: (context: TooltipItem<keyof ChartTypeRegistry>) => {
-
+            if (context.dataIndex === 1) {
+              return '';
+            }
             const value = context.raw || 0;
             return value + '%';
 
@@ -313,7 +354,9 @@ export class StatsCouleurs {
       },
       tooltip: {
         mode: 'index',
+
         callbacks: {
+
           label: (context: any) => {
             if (context.datasetIndex == 0) { // occurences
               const value = context.raw || 0;
