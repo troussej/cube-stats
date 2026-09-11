@@ -75,14 +75,19 @@ export class StatsCouleurs {
         total: 0
       })
       .value();
-    return {
-      W: [stats.w, stats.total - stats.w],
-      U: [stats.u, stats.total - stats.u],
-      B: [stats.b, stats.total - stats.b],
-      R: [stats.r, stats.total - stats.r],
-      G: [stats.g, stats.total - stats.g]
+    const res = {
+      W: [Math.round(stats.w / stats.total * 100)],
+      U: [Math.round(stats.u / stats.total * 100)],
+      B: [Math.round(stats.b / stats.total * 100)],
+      R: [Math.round(stats.r / stats.total * 100)],
+      G: [Math.round(stats.g / stats.total * 100)]
     };
 
+    _.forEach(res, (value, key) => {
+      value.push(100 - value[0]);
+    });
+
+    return res;
   });
 
   public colorComboRepartitionStats = computed(() => {
