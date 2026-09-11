@@ -1,5 +1,5 @@
 <div class="m-4">
-    <div class="my-2 flex gap-2">
+    <div class="my-4 flex gap-2">
         <button pButton (click)="router.navigate([''])" severity="secondary">
             <svg data-p-icon="home"></svg>
             Retour
@@ -21,15 +21,14 @@
                     </ng-content>
                     <ng-content #content>
 
-                        <p-table [value]="draftPlayers()[name]" size="small" [sortField]="'draftId'" [sortOrder]="-1">
+                        <p-table [value]="draftPlayers()[name]" size="small" [sortField]="'date'" [sortOrder]="-1">
                             <ng-template #header>
                                 <tr>
 
-                                    <th pSortableColumn="deck">Deck <p-sort-icon field="deck" /></th>
-                                    <th pSortableColumn="date">Date <p-sort-icon field="date" /></th>
-                                    <th pSortableColumn="score">Result <p-sort-icon field="score" />
-                                    </th>
-                                    <th>Elo Change</th>
+                                    <th pSortableColumn="deck">Deck&nbsp;<p-sort-icon field="deck" /></th>
+                                    <th pSortableColumn="date">Date&nbsp;<p-sort-icon field="date" /></th>
+                                    <th pSortableColumn="score">Rés.&nbsp;<p-sort-icon field="score" /></th>
+                                    <th>Elo</th>
                                 </tr>
                             </ng-template>
                             <ng-template #body let-data>
@@ -42,7 +41,7 @@
                                     <td class="whitespace-nowrap">{{ data.player.result()}}
 
                                     </td>
-                                    <td><app-elo-change
+                                    <td><app-elo-change [showOld]="false"
                                             [elo]="playerService.totalEloChange(data.player,data.draft)"></app-elo-change>
                                     </td>
                                 </tr>

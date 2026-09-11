@@ -12,6 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 export class EloChange {
 
   elo = input<PlayerEloChange>();
+  showOld = input<boolean>(true);
 
   public changeDir = computed<number>(() => {
     const elo = this.elo();
