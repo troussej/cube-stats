@@ -36,6 +36,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
 - Always use the Module import for primeng imports
+- Do not use styleUrls, use styleUrl
 
 ## State Management
 

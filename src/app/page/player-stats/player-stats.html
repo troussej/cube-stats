@@ -35,7 +35,8 @@
                                 <tr>
 
                                     <td>
-                                        <app-deck-tag [deckDescription]="data.deck"></app-deck-tag>
+                                        <app-deck-tag [deckDescription]="data.deck"
+                                            [deckImg]="data.deckImg"></app-deck-tag>
                                     </td>
                                     <td>{{ data.draftId }}</td>
                                     <td class="whitespace-nowrap">{{ data.player.result()}}

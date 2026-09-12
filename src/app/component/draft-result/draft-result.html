@@ -18,7 +18,7 @@
                             <a [routerLink]="['player',player.name]">{{ player.name }}</a>
                         </td>
                         <td>
-                            <app-deck-tag [deckDescription]="player.deck"></app-deck-tag>
+                            <app-deck-tag [deckDescription]="player.deck" [deckImg]="player.deckImg"></app-deck-tag>
                         </td>
                         <td class="whitespace-nowrap">{{ player.result()}}</td>
                         <td><app-elo-change

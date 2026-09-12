@@ -1,0 +1,11 @@
+<div class="flex">
+    <button pButton type="button" class=" " size="small" severity="secondary" label="Show Image"
+        (hover)="pop.show($event)" (click)="pop.show($event)">
+        <svg data-p-icon="image"></svg>
+    </button>
+    <p-popover #pop>
+        <div class="max-w-200 w-full">
+            <img [src]="imgSrc()" alt="Popover Image" class="popover-img" />
+        </div>
+    </p-popover>
+</div>

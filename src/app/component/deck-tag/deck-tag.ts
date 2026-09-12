@@ -3,12 +3,13 @@ import { Debug } from "../debug/debug";
 import _ from 'lodash';
 import { TagModule } from 'primeng/tag';
 import { ConfigService } from 'app/service/config.service';
+import { ImgPopover } from '../img-popover/img-popover';
 
 
 const SYMBOLS_RGX = /[WUBRG()]+/i
 
 @Component({
-  imports: [Debug, TagModule],
+  imports: [Debug, TagModule, ImgPopover],
   selector: 'app-deck-tag',
   styleUrl: './deck-tag.css',
   templateUrl: './deck-tag.html',
@@ -18,6 +19,7 @@ export class DeckTag {
   public config = inject(ConfigService).config;
 
   public deckDescription = input.required<string>();
+  public deckImg = input<string>();
 
 
   public tag = computed(() => {

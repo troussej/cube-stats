@@ -41,8 +41,9 @@ export class SheetService {
         for (let i = 1; i <= 10; i++) {
             let playerName = line[`J${i}`];
             let playerDeck = line[`Deck J${i}`];
+            let deckImg = line[`Img ${i}`];
             if (playerName && playerDeck) {
-                players.push(new DraftPlayer(playerName, playerDeck));
+                players.push(new DraftPlayer(playerName, playerDeck, deckImg));
             }
         }
         return players;

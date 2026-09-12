@@ -1,4 +1,4 @@
-<div class="flex flex-wrap flex items-center justify-items-center-safe  gap-x-2 mx-4">
+<div class="flex flex-wrap items-center justify-items-center-safe  gap-x-2 mx-4">
 
     @if(tag().manaString && tag().manaString.length > 0) {
     <p-tag severity="secondary">
@@ -20,4 +20,9 @@
     <span class="capitalize">
         {{ tag().description}}
     </span>
+    @if(deckImg() && (deckImg()?.length??0 > 0)) {
+    <div>
+        <app-img-popover [imgSrc]="deckImg()"></app-img-popover>
+    </div>
+    }
 </div>
