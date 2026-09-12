@@ -44,6 +44,7 @@ export class PlayerStats {
         draftId: data.draft.id,
         date: data.draft.date,
         deck: data.player.deck,
+        deckImg: data.player.deckImg,
         draft: data.draft,
         score: data.player.score
       }))
